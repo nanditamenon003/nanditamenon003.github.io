@@ -189,9 +189,33 @@ img.px, .px { image-rendering: pixelated; image-rendering: crisp-edges; }
 .quest-hint { font-weight: 500; color: var(--muted); font-style: italic; }
 
 /* avatar */
-.avatar { position: absolute; z-index: 30; left: 50%; bottom: 62px; width: 108px; margin-left: -54px; pointer-events: none; }
-.avatar-btn { pointer-events: auto; display: block; padding: 0; background: none; border: 0; animation: bob 2.2s steps(2) infinite; }
-.avatar-btn img { width: 108px; height: 144px; display: block; filter: drop-shadow(4px 4px 0 rgba(26, 36, 66, 0.25)); }
+.avatar { position: absolute; z-index: 30; left: 50%; bottom: 62px; width: 120px; margin-left: -60px; pointer-events: none; }
+.avatar-btn { pointer-events: auto; display: block; padding: 0; background: none; border: 0; }
+/* Idle animation: 4 frames (base, lean right, lean left, blink) drawn by tools/make_avatar_idle.py,
+   played as an 8-second loop. Whole-pixel scaling (4x) keeps every sprite pixel crisp. */
+.idle-sprite {
+  --fw: 120px; --fh: 160px;
+  display: block; width: var(--fw); height: var(--fh);
+  background: url('../assets/avatar_idle_sheet.png') 0 0 / calc(var(--fw) * 4) var(--fh) no-repeat;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+  filter: drop-shadow(4px 4px 0 rgba(26, 36, 66, 0.25));
+  animation: idle 8s steps(1, end) infinite;
+}
+.idle-sprite.idle-small { --fw: 60px; --fh: 80px; filter: none; }
+.idle-demo { display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin: 10px 0 6px; padding: 12px; background: linear-gradient(#FFD6E8, #E6DBFB); border: 2px solid #3B4A86; width: fit-content; max-width: 100%; }
+.idle-strip { width: 360px; max-width: 100%; height: auto; image-rendering: pixelated; }
+@keyframes idle {
+  0%      { background-position-x: 0; }                              /* base */
+  20%     { background-position-x: calc(var(--fw) * -1); }           /* lean right */
+  37.5%   { background-position-x: 0; }
+  47.5%   { background-position-x: calc(var(--fw) * -3); }           /* blink */
+  49.5%   { background-position-x: 0; }
+  60%     { background-position-x: calc(var(--fw) * -2); }           /* lean left */
+  77.5%   { background-position-x: 0; }
+  93.75%  { background-position-x: calc(var(--fw) * -3); }           /* blink */
+  95.75%  { background-position-x: 0; }
+  100%    { background-position-x: 0; }
+}
 .avatar-shadow { display: none; }
 .avatar-say { position: absolute; bottom: calc(100% - 4px); left: 50%; transform: translateX(-30%); width: max-content; max-width: 230px; padding: 9px 12px; font-size: 13px; font-weight: 600; line-height: 1.4; background: #fff; border: 3px solid var(--navy); box-shadow: 3px 3px 0 var(--navy); animation: pop 0.2s steps(3); pointer-events: auto; }
 .avatar-say::after { content: ''; position: absolute; top: 100%; left: 30%; width: 12px; height: 12px; background: #fff; border-right: 3px solid var(--navy); border-bottom: 3px solid var(--navy); transform: translateY(-7px) rotate(45deg); }
@@ -511,7 +535,7 @@ input[type='range']::-moz-range-thumb { width: 14px; height: 18px; background: v
 .prompt span { display: inline-block; font-family: var(--px); font-size: 7px; padding: 4px 6px; background: var(--pink); color: var(--navy); }
 .prompt code { display: block; margin-top: 4px; padding: 10px 12px; font: 12.5px/1.55 var(--mono); background: #0A0F22; color: #C7F5DF; border-left: 4px solid #7FE0B8; }
 .dec { padding: 10px 14px; margin: 10px 0; background: #1A2247; border-left: 5px solid var(--pink); font-size: 13.5px; }
-.dec code { font-family: var(--mono); background: #0A0F22; padding: 1px 5px; color: #C7F5DF; }
+.term-doc code, .dec code { font-family: var(--mono); background: #0A0F22; padding: 1px 5px; color: #C7F5DF; }
 .snd { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
 .term .pbtn { background: #1C2547; color: #DDE5FF; border-color: #7FE0B8; box-shadow: 2px 2px 0 #7FE0B8; }
 
@@ -684,5 +708,5 @@ input[type='range']::-moz-range-thumb { width: 14px; height: 18px; background: v
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
-  .cloud { animation: none; }
+  .cloud, .idle-sprite { animation: none; }
 }

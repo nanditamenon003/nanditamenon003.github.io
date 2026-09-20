@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nandita Menon — Portfolio</title>
+  <meta name="description" content="Nandita Menon — computer-science engineer turned brand and media strategist. An interactive pixel-art desktop portfolio with an AI assistant, recruiter mode, live analytics and hidden achievements.">
+  <meta name="theme-color" content="#1A2442">
+  <meta property="og:title" content="Nandita Menon — Portfolio">
+  <meta property="og:description" content="Debugging my way from tech to brand strategy. Open the pixel desktop.">
+  <meta property="og:image" content="assets/nandita_pixel_avatar.png">
+  <link rel="icon" type="image/png" href="assets/nandita_pixel_avatar_raw_30x40.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-stage="landing">
+
+  <!-- ============ 1. LANDING CARD (loads first: real photo, real links, one CTA) ============ -->
+  <main id="landing" class="landing">
+    <div class="clouds" aria-hidden="true"></div>
+    <div class="lcard">
+      <div class="lphoto">
+        <img src="assets/nandita_photo.jpg" alt="Nandita Menon, smiling, in a navy blazer and pink collared shirt" width="500" height="563">
+        <div class="lsticker" aria-hidden="true">
+          <img class="px" src="assets/nandita_pixel_avatar.png" alt="">
+          <span>hi! i'm the<br>pixel version</span>
+        </div>
+      </div>
+      <div class="lident">
+        <div class="plabel">PORTFOLIO.EXE · v2026</div>
+        <h1>Nandita<br>Menon</h1>
+        <p class="lrole">PGDM Media &amp; Entertainment '27 · WeSchool, Mumbai<br>B.Tech Computer Science &amp; Engineering</p>
+        <p class="ltag">“Debugging my way from tech to brand strategy.”</p>
+        <div class="lquick">
+          <button type="button" class="pbtn" id="l-cv">Resume PDF</button>
+          <a class="pbtn" id="l-in" href="https://www.linkedin.com/in/nandita-menon-977439205" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="pbtn" id="l-gh" href="https://github.com/nanditamenon003" target="_blank" rel="noopener">GitHub</a>
+          <a class="pbtn" id="l-em" href="mailto:nanditamenon2001@gmail.com">Email</a>
+        </div>
+        <button type="button" class="pbtn primary big" id="enter">Enter Desktop &gt;</button>
+        <p class="lfine">An interactive pixel-art desktop with an AI assistant, a recruiter mode, live analytics and hidden badges. Takes about two minutes.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ 2. BOOT SCREEN (skippable, < 3s) ============ -->
+  <div id="boot" class="boot" hidden role="status" aria-live="polite">
+    <div class="boot-inner">
+      <img class="px boot-av" src="assets/nandita_pixel_avatar_raw_30x40.png" alt="" aria-hidden="true">
+      <pre id="boot-log" class="boot-log"></pre>
+      <div class="boot-bar" aria-hidden="true"><b id="boot-fill"></b></div>
+      <button type="button" class="pbtn small" id="boot-skip">Skip ▸</button>
+    </div>
+  </div>
+
+  <!-- ============ 3. PIXEL DESKTOP ============ -->
+  <div id="desktop" class="desktop" hidden>
+    <div class="clouds far" aria-hidden="true"></div>
+    <div class="clouds near" aria-hidden="true"></div>
+
+    <header id="menubar" class="menubar">
+      <div class="mb-left">
+        <span class="mb-logo" aria-hidden="true"></span>
+        <b class="mb-brand">Nandita.OS</b>
+        <span class="mb-name">Nandita Menon</span>
+        <span class="mb-mode" id="mb-mode" hidden></span>
+      </div>
+      <div class="mb-right">
+        <button type="button" id="mb-sound" class="mb-btn" aria-pressed="false" aria-label="Sound is off. Turn on 8-bit sounds">
+          <span class="spk" aria-hidden="true">♪</span><span class="mb-t" id="mb-sound-t">SND OFF</span>
+        </button>
+        <button type="button" id="mb-xp" class="xp" aria-label="System usage. Open achievements">
+          <span class="xp-lv" id="xp-lv">LV1</span>
+          <span class="xp-bar" id="xp-bar" aria-hidden="true"></span>
+          <span class="xp-pct" id="xp-pct">0%</span>
+          <span class="xp-pop" id="xp-pop" aria-hidden="true"></span>
+        </button>
+        <span class="mb-clock" id="mb-clock"></span>
+      </div>
+    </header>
+
+    <div class="icons icons-left" id="icons-left" aria-label="Featured work"></div>
+    <div class="icons icons-right" id="icons-right" aria-label="Files"></div>
+
+    <aside class="sticky" id="sticky" aria-live="polite">
+      <i class="tape" aria-hidden="true"></i>
+      <span class="sticky-label">NOTE.TXT</span>
+      <p id="sticky-text">Debugging my way from tech to brand strategy.</p>
+    </aside>
+
+    <div class="quest" id="quest" aria-live="polite">
+      <span class="quest-t">EXPLORED</span>
+      <span class="quest-pips" id="quest-pips"></span>
+      <span class="quest-n" id="quest-n"></span>
+      <span class="quest-hint" id="quest-hint"></span>
+    </div>
+
+    <div class="avatar" id="avatar">
+      <div class="avatar-say" id="avatar-say" hidden></div>
+      <button type="button" class="avatar-btn" id="avatar-btn" aria-label="Nandita's pixel avatar. Click for a hint">
+        <img class="px" src="assets/nandita_pixel_avatar.png" alt="">
+      </button>
+      <i class="avatar-shadow" aria-hidden="true"></i>
+    </div>
+
+    <nav class="dock" id="dock" aria-label="Dock"></nav>
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+  </div>
+
+  <!-- ============ 4. MOBILE (stacked fallback, built on demand) ============ -->
+  <div id="mobile" class="mobile" hidden></div>
+
+  <noscript><p style="padding:24px;font:16px sans-serif">This portfolio is an interactive page and needs JavaScript. Nandita Menon — nanditamenon2001@gmail.com · linkedin.com/in/nandita-menon-977439205</p></noscript>
+
+  <script src="js/core.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/sfx.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/wm.js"></script>
+  <script src="js/agent.js"></script>
+  <script src="js/apps.js"></script>
+  <script src="js/apps-os.js"></script>
+  <script src="js/mobile.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

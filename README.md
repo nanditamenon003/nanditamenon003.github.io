@@ -18,14 +18,13 @@ Then open <http://localhost:5173>.
 | `/#desktop` | Skip the landing card and boot (handy for demos) |
 | `/?reset` | Clear saved XP, badges, analytics and icon order (fresh start for a presentation) |
 
-## Publish (GitHub Pages)
+## Live site
 
-1. Create a repository named exactly `nanditamenon003.github.io`.
-2. Push the contents of this folder to it (`index.html` must be at the repo root).
-3. Settings → Pages → deploy from the `main` branch, `/ (root)`.
-4. Live at `https://nanditamenon003.github.io`.
+**https://nanditamenon003.github.io** — served by GitHub Pages from the `main` branch, `/ (root)` of this repository. Every push to `main` redeploys in about a minute.
 
-Skip `option-b/` if you don't want the unused example.
+To change something: edit the files, then `git add -A`, `git commit -m "..."`, `git push`.
+
+`option-b/` is an optional, untested example for a live-model assistant; the site does not use it.
 
 ## How it maps to the rubric
 

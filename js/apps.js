@@ -625,7 +625,19 @@
         '<div class="bars">' + barRows([{ l: 'CRM preview · max 40% off', v: 4186, hi: true }, { l: 'Public EOSS · max 50% off', v: 3380 }], { max: 4600, fmt: (v) => '₹' + v.toLocaleString('en-IN') }) + '</div>' +
         '<div class="callout"><b>The ASP inversion:</b> the day with the <i>shallower</i> discount sold at the <i>higher</i> price. The basket premium came from customer segmentation (pre-qualified Platinum members), not discount depth — a threshold discount (“spend ₹30,000 for 40% off”) then rewarded basket stacking.</div>' +
         '<ul class="ticks"><li>Ran CRM tele-clienteling via Olabi, segmenting Silver / Gold / Platinum members; ATV ₹15,506 on the preview day</li><li>Applied multi-buy look-building and checkout impulse-attachment to protect transaction value</li><li>Re-merchandised the floor size-wise before the public sale — supporting a record ₹11.03L store day (28 Jun)</li><li>Owned end-of-day financial reconciliation during high-volume sale periods</li></ul>' +
-        '<div class="note"><b>Honest limits:</b> single store, two-day comparison, observational design — evidence of association, not proof of causation. The report proposes a controlled multi-day comparison next.</div>',
+        '<details class="more"><summary>Read more: objectives, my cycles, recommendations</summary><div class="more-body">' +
+          '<h4>Objectives</h4><ol class="moves compact"><li>Measure the impact of CRM tele-clienteling on UPT and ATV against the store baseline</li><li>Compare consultative look-building with the size-wise layout</li><li>Separate CRM-driven basket gains from general markdown effects</li></ol>' +
+          '<h4>My individual cycles</h4>' +
+          '<div class="tscroll"><table class="rtable left"><thead><tr><th>Cycle</th><th>Net sales</th><th>Target</th><th>Bills</th><th>Basket</th></tr></thead><tbody>' +
+            '<tr><td>May · full price</td><td>₹10,82,654</td><td><b>108.3%</b> of ₹10L</td><td>93</td><td>UPT 2.6 vs store 2.52 · ATV ₹10,909</td></tr>' +
+            '<tr><td>June · end-of-season sale</td><td>₹8,44,715</td><td>84.5%</td><td>—</td><td>UPT 1.9 · ASP ₹4,616 vs store ₹4,447</td></tr>' +
+          '</tbody></table></div>' +
+          '<p class="fine">In June, UPT dipped to 1.9 because the sale drove single-item markdown purchases — but my ASP still beat the store baseline.</p>' +
+          '<h4>Store context</h4><ul class="ticks"><li>May: the store hit <b>105.5%</b> of its target</li><li>Record single-day store revenue: <b>₹11,02,793</b></li></ul>' +
+          '<div class="callout"><b>Category insight:</b> kidswear was 16% of units but only 8% of value, yet grew <b>+24%</b> like-for-like — so the report recommends family-wardrobe cross-merchandising.</div>' +
+          '<h4>Other recommendations</h4><ul class="ticks"><li><b>Multi-buy framework:</b> Buy 2 Get 10%, Buy 3 Get 20%</li><li><b>Checkout impulse attachments</b> to protect ATV</li><li><b>WhatsApp video fit consultations</b> to cut digital returns</li></ul>' +
+          '<div class="note"><b>Limitations:</b> single store, observational design (association, not proof of causation), and a two-day sharpest comparison window. The report proposes a controlled multi-day comparison next.</div>' +
+        '</div></details>',
     },
     {
       id: 'sirp', sprite: 'pdf', tag: 'Research · May–Jul 2026', title: 'SIRP · AI & Privacy',

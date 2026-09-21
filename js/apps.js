@@ -640,13 +640,38 @@
     },
     {
       id: 'gcl', sprite: 'pdf', tag: 'Client project · Nov 2025–Apr 2026', title: 'GCL · ShastraVerse',
-      blurb: 'How AI is reshaping content creation — for Digital Dogs Pvt. Ltd.',
+      blurb: 'PostGenie AI prototype + research for Digital Dogs Pvt. Ltd.',
       html:
-        '<div class="tiles"><div class="tile big"><b>15+</b><span>interviews: creators &amp; marketers at Nykaa, NODWIN Gaming, Jio Creative Labs</span></div><div class="tile"><b>6</b><span>stage AI-powered content journey</span></div><div class="tile"><b>1</b><span>prototype platform: PostGenie AI</span></div></div>' +
-        '<p>For a Mumbai content agency client, the team mapped where AI fits into the content lifecycle — and where it doesn\'t yet.</p>' +
+        '<div class="kicker">The prototype</div>' +
+        '<div class="tiles"><div class="tile big"><b>PostGenie AI</b><span>An AI-powered, end-to-end content co-creation platform — proposed and prototyped by our team</span></div><div class="tile"><b>1 platform</b><span>ideation, creation and planning in one place, instead of tool-hopping</span></div><div class="tile"><b>My role</b><span>Research Analyst &amp; Presenter</span></div></div>' +
+        '<div class="row-actions"><a class="pbtn primary" href="https://post-genie-aimagic.lovable.app/" target="_blank" rel="noopener">Try the live prototype &gt;</a><span class="fine">Opens in a new tab</span></div>' +
+        '<h3>App interface: from idea to post in seconds</h3>' +
+        '<div class="phones">' +
+          '<figure><img src="assets/postgenie-1-login.jpg" alt="PostGenie AI login screen: Welcome back, with email and password fields and Google sign-in" loading="lazy" width="400" height="866"><figcaption>Log in</figcaption></figure>' +
+          '<figure><img src="assets/postgenie-2-home.jpg" alt="PostGenie AI home screen: What would you like to create today? with Create Post, Make Reel, Design Graphic and Plan Content options" loading="lazy" width="400" height="866"><figcaption>Home</figcaption></figure>' +
+          '<figure><img src="assets/postgenie-3-brandkit.jpg" alt="PostGenie AI Brand Kit setup, step 1 of 5: brand name, tagline, niche and target audience" loading="lazy" width="400" height="866"><figcaption>Brand Kit setup</figcaption></figure>' +
+          '<figure><img src="assets/postgenie-4-planner.jpg" alt="PostGenie AI Content Planner: a monthly calendar and an idea bank" loading="lazy" width="400" height="866"><figcaption>Content Planner</figcaption></figure>' +
+        '</div>' +
+        '<h3>What the prototype does</h3>' +
+        '<ul class="ticks"><li><b>Create Post</b> — AI-powered caption and design</li><li><b>Make Reel</b> — script and video in minutes</li><li><b>Design Graphic</b> — templates and brand colours</li><li><b>Plan Content</b> — a calendar, content pillars and an idea bank</li><li><b>Brand Kit</b> — a 5-step setup so every post feels authentically yours</li></ul>' +
+        '<div class="callout"><b>Core insight:</b> content success rests on strong hooks, storytelling, consistency and authenticity. AI boosts speed but still needs human input — which is why PostGenie AI is a controlled, hybrid tool rather than a one-click generator.</div>' +
+        '<h3>Why not just Canva + ChatGPT?</h3>' +
+        '<p>The creators we interviewed juggled separate tools: Canva, Figma and Adobe for design, ChatGPT and Claude for ideas and copy. PostGenie AI brings that into one place.</p>' +
+        '<div class="tscroll"><table class="rtable vs"><thead><tr><th></th><th>Existing tools</th><th>PostGenie AI</th></tr></thead><tbody>' +
+          '<tr><td>Workflow</td><td>Multiple separate tools for ideation, design and writing</td><td>One platform</td></tr>' +
+          '<tr><td>Content</td><td>Limited: text or design, generated separately</td><td>Complete</td></tr>' +
+          '<tr><td>Personalisation</td><td>Limited, often generic</td><td>Customised</td></tr>' +
+          '<tr><td>Iteration</td><td>Mostly one-time output</td><td>Refined</td></tr>' +
+          '<tr><td>Strategy</td><td>Weak</td><td>Strong</td></tr>' +
+          '<tr><td>Authenticity</td><td>Artificial</td><td>Real</td></tr>' +
+        '</tbody></table></div>' +
+        '<div class="note"><b>Next steps (from the deck):</b> copyright-safe content, licensed assets and plagiarism checks · performance insights · social-platform integration · continuous testing and feedback.</div>' +
+        '<h3>The research behind it</h3>' +
+        '<div class="tiles"><div class="tile big"><b>15+</b><span>interviews: creators &amp; marketers at Nykaa, NODWIN Gaming, Jio Creative Labs</span></div><div class="tile"><b>6</b><span>stage AI-powered content journey</span></div><div class="tile"><b>1</b><span>client: Digital Dogs Pvt. Ltd.</span></div></div>' +
+        '<p>For Digital Dogs Pvt. Ltd., a Mumbai content agency, the team studied how AI is reshaping content creation — mapping where AI fits into the content lifecycle, and where it doesn\'t yet.</p>' +
         '<div class="journey"><span>1<b>Discovery</b></span><span>2<b>Ideation</b></span><span>3<b>Creation</b></span><span>4<b>Review</b></span><span>5<b>Publishing</b></span><span>6<b>Performance</b></span></div>' +
-        '<div class="callout"><b>Key insight:</b> fragmented workflows — content passes through many disconnected tools — were the biggest inefficiency across the lifecycle.</div>' +
-        '<p><b>Proposal — PostGenie AI:</b> an end-to-end AI content co-creation platform that unifies the whole journey into one personalised workflow.</p>',
+        '<div class="callout"><b>Key insight:</b> fragmented workflows — content passing through many disconnected tools — were the biggest inefficiency across the lifecycle. That is the problem PostGenie AI is built to solve.</div>' +
+        '<div class="fine">Team of six: Nandita Menon (Research Analyst &amp; Presenter), Pranjal Sankhla, Hrishi Rathod, Mrinal Baramwal, Tisha Patel, Revati Joshi · Global Citizen Leadership, WeSchool.</div>',
     },
   ];
 

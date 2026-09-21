@@ -469,6 +469,12 @@ input[type='range']::-moz-range-thumb { width: 14px; height: 18px; background: v
 .expdetail h3 { margin-top: 14px; }
 .rise { animation: rise 0.28s ease-out both; }
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.phones { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 8px 0 14px; }
+.phones figure { margin: 0; }
+.phones img { display: block; width: 100%; height: auto; border: 2px solid var(--navy); box-shadow: 3px 3px 0 var(--navy); background: #fff; }
+.phones figcaption { margin-top: 6px; font-size: 12px; font-weight: 700; text-align: center; color: var(--muted); }
+.rtable.vs th, .rtable.vs td { text-align: left; vertical-align: top; }
+.rtable.vs td:last-child { background: var(--pink-l); font-weight: 700; }
 .journey { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin: 12px 0; }
 .journey span { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 2px; background: var(--pink-l); border: 2px solid var(--navy); font-family: var(--px); font-size: 8px; }
 .journey b { font-family: var(--sans); font-size: 10.5px; font-weight: 700; }
@@ -710,6 +716,7 @@ input[type='range']::-moz-range-thumb { width: 14px; height: 18px; background: v
   .brow { grid-template-columns: minmax(80px, 120px) 1fr 52px; }
   .about-top { flex-direction: column; }
   .journey { grid-template-columns: repeat(3, 1fr); }
+  .phones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .kpis { grid-template-columns: 1fr 1fr; }
   .doc, .slide { padding: 16px 14px 22px; }
   .tk-body { height: 330px; } .tk-info { left: 12%; }

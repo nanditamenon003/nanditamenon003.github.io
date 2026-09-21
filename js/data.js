@@ -296,7 +296,7 @@
       keys: [['gcl', 6], ['global citizen', 5], ['shastraverse', 6], ['postgenie', 6], ['digital dogs', 6], ['content', 4], ['creator*', 3], ['nykaa', 3], ['nodwin', 3], ['jio', 3]],
       a: [
         "For the Global Citizen Leadership project (Nov 2025 – Apr 2026), Nandita's team studied how AI is reshaping content creation for <b>Digital Dogs Pvt. Ltd.</b>",
-        "They mapped a 6-stage AI-powered content journey (discovery → ideation → creation → review → publishing → performance) through <b>15+ interviews</b> with creators and marketers from Nykaa, NODWIN Gaming and Jio Creative Labs, found fragmented workflows to be the key inefficiency, and proposed <b>PostGenie AI</b> — an end-to-end AI content co-creation platform.",
+        "They mapped a 6-stage AI-powered content journey (discovery → ideation → creation → review → publishing → performance) through <b>15+ interviews</b> with creators and marketers from Nykaa, NODWIN Gaming and Jio Creative Labs, found fragmented workflows to be the key inefficiency, and proposed <b>PostGenie AI</b> — an end-to-end AI content co-creation platform. The team built a working prototype (login, Home, Brand Kit setup, Content Planner) that brings ideation, design and planning into one place instead of separate tools like Canva and ChatGPT. Nandita was the team's Research Analyst and Presenter.",
       ],
       open: ['gcl'],
     },

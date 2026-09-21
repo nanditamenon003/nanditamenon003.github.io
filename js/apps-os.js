@@ -1,11 +1,11 @@
-/* apps-os.js — the "system" windows: About, Contact, Build Log, Trash, secret file,
-   Messages (AI assistant), Recruiter Mode, Activity Monitor and Achievements. */
+/* apps-os.js — the "system" windows: About, Contact, Messages (AI assistant), Recruiter Mode,
+   Activity Monitor and Achievements. */
 (function () {
   'use strict';
   const NM = window.NM;
   const { $, $$, h, esc } = NM;
   const defs = NM.apps.defs;
-  const { tabs, barRows } = NM.apps.helpers;
+  const { barRows } = NM.apps.helpers;
   const D = NM.data;
 
   const ago = (t) => {
@@ -15,19 +15,6 @@
     if (s < 86400) return Math.round(s / 3600) + 'h ago';
     return Math.round(s / 86400) + 'd ago';
   };
-
-  // before/after slider used in About and the Build Log
-  function transformSlider(host) {
-    host.innerHTML =
-      '<div class="xf" style="--p:50%">' +
-        '<img class="xf-a" src="assets/nandita_photo.jpg" alt="Real headshot of Nandita">' +
-        '<div class="xf-b"><img class="px" src="assets/nandita_pixel_avatar.png" alt="AI-generated pixel avatar of Nandita"></div>' +
-        '<span class="xf-l l1">REAL PHOTO</span><span class="xf-l l2">AI PIXEL SPRITE</span><i class="xf-line"></i>' +
-      '</div>' +
-      '<input type="range" min="0" max="100" value="50" class="xf-r" aria-label="Compare the real photo with the AI pixel avatar">';
-    const xf = $('.xf', host), r = $('.xf-r', host);
-    r.addEventListener('input', () => { xf.style.setProperty('--p', r.value + '%'); NM.sfx.play('tick'); });
-  }
 
   /* ================= ABOUT ================= */
   defs.about = {
@@ -97,146 +84,6 @@
         NM.analytics.track.contact('copy-email');
         NM.sfx.play('chime');
       });
-    },
-  };
-
-  /* ================= BUILD LOG ================= */
-  const SOUNDS = [['open', 'Window open'], ['close', 'Window close'], ['boot', 'Boot chime'], ['chime', 'Achievement'], ['levelup', 'Level-up'], ['flip', 'Page flip'], ['scan', 'Scanning'], ['trash', 'Trash']];
-
-  defs.buildlog = {
-    title: 'Terminal — how_this_was_made.txt', sprite: 'terminal', w: 760, h: 620, cls: 'term',
-    content(root) {
-      root.innerHTML = '<div class="term-head"><span>nandita@portfolio</span>:<span>~</span>$ cat how_this_was_made.txt</div><div class="term-tabs"></div>';
-      const host = $('.term-tabs', root);
-      tabs(host, [
-        {
-          id: 'workflow', label: 'workflow',
-          html:
-            '<div class="doc term-doc">' +
-              '<h2>AI-created, human-directed</h2>' +
-              '<p>This assignment grades the <i>creation process</i>, so it is documented here. The short version: Nandita set the concept, supplied the photograph and source documents, and made the decisions; Claude (Anthropic) wrote the code that produced every asset and the site itself; her documents were the source of truth for every fact.</p>' +
-              '<ol class="moves">' +
-                '<li><b>Direction.</b> The concept (a pixel-art macOS desktop), the palette taken from her blazer, the rubric mapping and the professional-first guardrails came from Nandita\'s written build brief.</li>' +
-                '<li><b>Avatar.</b> Claude wrote Python/Pillow code that draws the sprite pixel by pixel, using her photograph as the visual reference. It is not the output of an image-generation model.</li>' +
-                '<li><b>Icons, clouds, cursor and dock.</b> AI-written procedural code: each icon is a small pixel map that JavaScript renders to a crisp PNG when the page loads.</li>' +
-                '<li><b>Sound pack.</b> AI-written Web Audio code synthesises every sound live in the browser. There are no audio files.</li>' +
-                '<li><b>Idle animation.</b> Claude wrote a Python/Pillow script (<code>tools/make_avatar_idle.py</code>, included in the repo) that redraws the avatar sprite into four frames — base, lean right, lean left, blink — and packs them into one sprite sheet. CSS plays them as an 8-second loop above the dock. It is a frame animation drawn by code: no video-generation model was used and there is no video file.</li>' +
-                '<li><b>Copy &amp; story.</b> Microcopy, boot text and the assistant\'s answers were drafted by Claude and checked against her resume, decks and reports.</li>' +
-                '<li><b>Review &amp; corrections.</b> Nandita reviewed the result and corrected it. Examples: every Black Fungus figure is taken from the deck\'s results table (Inception V3: 98.87% train / 98.25% test), and the Prodyssey card was rewritten from the real deck after a first draft built from her brief.</li>' +
-              '</ol>' +
-              '<div class="dec"><b>Why procedural code instead of image and audio generators?</b> It was a deliberate technique choice. Code gives exact control of a small palette, stays crisp at any size, needs no separate icon or sound files, is fully editable, raises no licensing questions, and every asset can be regenerated from a few lines. The assets are AI-created either way — the AI simply used code as its brush.</div>' +
-              '<h3>Who did what</h3>' +
-              '<table class="ttable"><thead><tr><th>Layer</th><th>AI-created</th><th>Human review</th><th>Human source / decision</th></tr></thead><tbody>' +
-                '<tr><td>Concept, palette, rubric strategy</td><td></td><td></td><td>✓ Nandita\'s brief and decisions</td></tr>' +
-                '<tr><td>Pixel avatar</td><td>✓ Claude (Python/Pillow, pixel by pixel)</td><td>✓ approved</td><td>✓ the photograph</td></tr>' +
-                '<tr><td>Icons, clouds, dock, cursor</td><td>✓ Claude (procedural pixel maps)</td><td>✓ reviewed</td><td></td></tr>' +
-                '<tr><td>Sound pack</td><td>✓ Claude (Web Audio synthesis)</td><td>✓ reviewed</td><td></td></tr>' +
-                '<tr><td>Avatar idle animation</td><td>✓ Claude (Python/Pillow frames)</td><td>✓ reviewed</td><td>✓ the avatar it animates</td></tr>' +
-                '<tr><td>Site code</td><td>✓ Claude Code</td><td>✓ tested</td><td></td></tr>' +
-                '<tr><td>Project facts &amp; numbers</td><td></td><td>✓ checked</td><td>✓ her decks, reports, resume</td></tr>' +
-                '<tr><td>Microcopy &amp; assistant answers</td><td>✓ drafted</td><td>✓ fact-checked</td><td></td></tr>' +
-              '</tbody></table>' +
-            '</div>',
-        },
-        {
-          id: 'assets', label: 'assets',
-          html:
-            '<div class="doc term-doc"><h2>The eight AI-creation categories</h2>' +
-            '<table class="ttable"><thead><tr><th>#</th><th>Category</th><th>Status</th><th>Where to see it</th></tr></thead><tbody>' +
-              '<tr><td>1</td><td>AI avatar</td><td class="ok">✓ done</td><td>Desktop, chat, landing · drawn by Claude-written Python/Pillow code</td></tr>' +
-              '<tr><td>2</td><td>AI image transformation</td><td class="ok">✓ done</td><td>Real photo → pixel sprite, slider below</td></tr>' +
-              '<tr><td>3</td><td>AI hero visuals</td><td class="ok">✓ done</td><td>Every icon, cloud, dock item and cursor · procedural code</td></tr>' +
-              '<tr><td>4</td><td>AI-assisted copywriting</td><td class="ok">✓ done</td><td>Boot text, badges, chat, empty states</td></tr>' +
-              '<tr><td>5</td><td>AI-generated audio</td><td class="ok">✓ done</td><td>Sound pack below · synthesised by AI-written code</td></tr>' +
-              '<tr><td>6</td><td>AI-assisted storytelling</td><td class="ok">✓ done</td><td>CS→brand arc told as OS upgrades</td></tr>' +
-              '<tr><td>7</td><td>Multimodal content</td><td class="ok">✓ done</td><td>Text + image + audio + interaction + data</td></tr>' +
-              '<tr><td>8</td><td>AI video</td><td class="ok">✓ done</td><td>Looping pixel animation: the avatar\'s idle loop above the dock · frames drawn by AI-written code, not a rendered video file</td></tr>' +
-            '</tbody></table>' +
-            '<h3>Looping pixel animation — the frames and the loop</h3>' +
-            '<p>The category allows a short looping pixel animation, so that is what this is: four frames generated by <code>tools/make_avatar_idle.py</code> (Claude-written Python/Pillow), played in sequence as an 8-second loop — two slow leans and two quick blinks.</p>' +
-            '<div class="idle-demo"><img class="px idle-strip" src="assets/avatar_idle_sheet.png" alt="The four animation frames side by side: base, lean right, lean left, blink" width="360" height="120"><span class="idle-sprite idle-small" role="img" aria-label="The avatar idle loop playing"></span></div>' +
-            '<div class="fine">Left: the four frames (base · lean right · lean left · blink). Right: the loop playing. It runs on the desktop above the dock and stands still if your system asks for reduced motion.</div>' +
-            '<h3>Image transformation — before / after</h3><div class="xf-wrap small" id="bl-xf"></div>' +
-            '<h3>8-bit sound pack <span class="fine">(synthesised live with the Web Audio API — no audio files)</span></h3><div class="snd" id="bl-snd"></div>' +
-            '</div>',
-          build(p) {
-            transformSlider($('#bl-xf', p));
-            const box = $('#bl-snd', p);
-            SOUNDS.forEach(([id, label]) => {
-              const b = h('<button class="pbtn small" type="button">▶ ' + esc(label) + '</button>');
-              b.addEventListener('click', () => NM.sfx.preview(id));
-              box.appendChild(b);
-            });
-          },
-        },
-        {
-          id: 'decisions', label: 'decisions',
-          html:
-            '<div class="doc term-doc"><h2>Design decisions worth defending</h2>' +
-            '<div class="dec"><b>Prototype assistant, not a live API call.</b> An API key in browser JavaScript can be copied by anyone and run up charges, and a static host can\'t hide it. The assignment asks for a prototype of the conversational and personalisation <i>logic</i> — so the assistant is intent-matching over a hand-written knowledge base: zero cost, works offline, can\'t fail on venue wifi, and can\'t invent facts. The code has a switch (<code>NM.config.agentEndpoint</code>) to route to a real model through a serverless proxy later, keeping the key server-side.</div>' +
-            '<div class="dec"><b>Analytics in localStorage.</b> A static site has no database, so counts persist per browser. That\'s honest and private (nothing leaves the device); the "Load demo data" toggle exists so the dashboard is populated in a 2-minute presentation.</div>' +
-            '<div class="dec"><b>Professional first.</b> A real-photo landing card loads before any pixel art; body copy is a readable sans-serif (the pixel font is UI chrome only); every project window leads with outcomes and metrics.</div>' +
-            '<div class="dec"><b>Sound is opt-in; the intro is skippable.</b> Auto-playing audio and long intros cost recruiters\' goodwill.</div>' +
-            '<div class="dec"><b>Transparent by design.</b> "Why this answer?" under each reply shows the matched intent and source — applying the findings of her own SIRP on explainable AI.</div>' +
-            '<div class="dec"><b>Mobile fallback.</b> Below 768px the desktop metaphor becomes a stacked, tappable layout instead of a broken one.</div>' +
-            '</div>',
-        },
-        {
-          id: 'stack', label: 'stack',
-          html:
-            '<div class="doc term-doc"><h2>Under the hood</h2>' +
-            '<div class="chips"><span>HTML</span><span>CSS</span><span>Vanilla JavaScript</span><span>Web Audio API</span><span>Canvas (sprite renderer)</span><span>localStorage</span><span>Press Start 2P</span><span>Inter</span></div>' +
-            '<p>No frameworks and no build step. Every icon is a pixel map rendered to a crisp PNG when the page loads, and every sound is synthesised live — there are no icon or audio files. Hosting: GitHub Pages (static). Multimodal by design — text, image, audio and interaction, plus a live analytics layer.</p>' +
-            '</div>',
-        },
-      ]);
-    },
-  };
-
-  /* ================= TRASH ================= */
-  defs.trash = {
-    title: 'Trash — Rejected Concepts', sprite: 'trash', w: 560, h: 500,
-    content(root) {
-      root.innerHTML =
-        '<div class="doc">' +
-          '<div class="kicker">7 items · you found the trash can</div>' +
-          '<h2>Rejected Concepts</h2>' +
-          '<p class="lead">Every portfolio has a graveyard. Here\'s this one\'s. Click a file for the autopsy.</p>' +
-          '<div class="trashlist" id="tl"></div>' +
-          '<div class="fine">A mix of real detours and dramatic licence.</div>' +
-        '</div>';
-      const list = $('#tl', root);
-      D.rejected.forEach((r) => {
-        const row = h('<div class="trow"><button class="tfile" type="button"><span class="ti"></span><b></b></button><div class="tnote" hidden></div></div>');
-        $('.ti', row).appendChild(NM.sprites.img('pdf'));
-        $('b', row).textContent = r.file;
-        const note = $('.tnote', row);
-        note.innerHTML = '<span></span> <button class="pbtn small" type="button">Restore</button><em class="fine"></em>';
-        $('span', note).textContent = r.note;
-        $('button.pbtn', note).addEventListener('click', () => { $('em', note).textContent = ' Restore denied — it was rejected for a reason.'; NM.sfx.play('error'); });
-        $('.tfile', row).addEventListener('click', () => { note.hidden = !note.hidden; NM.sfx.play('click'); });
-        list.appendChild(row);
-      });
-    },
-  };
-
-  /* ================= SECRET ================= */
-  defs.secret = {
-    title: 'life_outside_work.txt', sprite: 'secret', w: 520, h: 470, cls: 'secretwin',
-    content(root) {
-      root.innerHTML =
-        '<div class="doc">' +
-          '<div class="kicker">★ Unlocked · you explored everything</div>' +
-          '<h2>Life outside the résumé</h2>' +
-          '<ul class="plain big">' +
-            '<li><b>Dancing</b> — the original way I learned that rhythm and structure aren\'t opposites.</li>' +
-            '<li><b>Reading</b> — usually whatever explains how people decide things.</li>' +
-            '<li><b>Games</b> — a Unity/C# course in 2021, a game-dev club, and an international game jam. This portfolio is basically a game with a résumé inside.</li>' +
-            '<li><b>Five languages</b> — English, Hindi, Malayalam, Telugu, Tamil. Hyderabad\'s pace, Kerala\'s roots.</li>' +
-          '</ul>' +
-          '<div class="callout tint">Thanks for going all the way. If something on this desktop made you curious, I\'d genuinely like to hear which part.</div>' +
-          '<div class="row-actions"><a class="pbtn primary" href="mailto:' + D.person.email + '?subject=Found%20the%20secret%20file">Tell me which part &gt;</a></div>' +
-        '</div>';
     },
   };
 
@@ -333,7 +180,7 @@
           '<div class="am-foot"><span class="fine">Stored in this browser\'s localStorage only — nothing is sent anywhere. Demo rows are simulated.</span><button class="pbtn small" id="am-reset" type="button">Reset live data</button></div>';
         root.scrollTop = top;
         $('#am-demo', wrap).addEventListener('change', (e) => { NM.analytics.setDemo(e.target.checked); NM.sfx.play('click'); });
-        $('#am-reset', wrap).addEventListener('click', () => { if (confirm('Reset the live analytics stored in this browser?')) { NM.analytics.reset(); NM.sfx.play('trash'); } });
+        $('#am-reset', wrap).addEventListener('click', () => { if (confirm('Reset the live analytics stored in this browser?')) { NM.analytics.reset(); NM.sfx.play('reset'); } });
         $$('.ins button', wrap).forEach((b) => b.addEventListener('click', () => {
           const a = ins[Number(b.dataset.n)].action;
           if (a.type === 'reorder') { NM.emit('reorder', NM.analytics.plan()); b.textContent = 'Applied ✓'; b.disabled = true; NM.sfx.play('chime'); }
@@ -362,7 +209,7 @@
             '<div class="xpbar big" aria-label="Experience ' + pct + ' percent">' + Array.from({ length: 20 }, (_, i) => '<i class="' + (i < Math.round(pct / 5) ? 'f' : '') + '"></i>').join('') + '</div>' +
             '<div class="prog">' +
               '<div><b>' + pr.projects + ' of ' + pr.projectsOf + '</b> projects &amp; case comps explored</div>' +
-              '<div><b>' + pr.done + ' of ' + pr.total + '</b> explored overall (every piece of work + the trash)' + (G.secret ? ' · <span class="ok">secret file unlocked ★</span>' : '') + '</div>' +
+              '<div><b>' + pr.done + ' of ' + pr.total + '</b> pieces of work explored' + (G.glitch ? ' · <span class="ok">final reward unlocked ★</span>' : ' · explore them all for a final reward') + '</div>' +
             '</div>' +
             '<div class="badges">' +
               G.BADGES.map((b) => {
@@ -373,10 +220,10 @@
             '<div class="am-foot"><span class="fine">Progress is saved in this browser.</span><button class="pbtn small" id="g-reset" type="button">Reset progress</button></div>' +
           '</div>';
         const rb = $('#g-reset', root);
-        if (rb) rb.addEventListener('click', () => { if (confirm('Reset XP, badges and exploration progress?')) { NM.game.reset(); NM.sfx.play('trash'); } });
+        if (rb) rb.addEventListener('click', () => { if (confirm('Reset XP, badges and exploration progress?')) { NM.game.reset(); NM.sfx.play('reset'); } });
       };
       render();
-      ['xp', 'badge', 'progress', 'secret'].forEach((e) => NM.on(e, () => { if (root.isConnected) render(); }));
+      ['xp', 'badge', 'progress', 'glitch'].forEach((e) => NM.on(e, () => { if (root.isConnected) render(); }));
     },
   };
 })();

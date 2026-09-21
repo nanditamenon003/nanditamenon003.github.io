@@ -6,10 +6,9 @@
   const D = NM.data;
 
   // Desktop: two projects + two folders on the left; Resume and About on the right.
-  // The build log lives in the dock so it doesn't compete with the actual work.
   const LEFT_DEFAULT = ['blackfungus', 'instructor', 'casecomps', 'experience'];
   const RIGHT = ['resume', 'about'];
-  const DOCK = ['ama', 'recruiter', 'activity', 'achievements', 'contact', 'buildlog', '|', 'trash'];
+  const DOCK = ['ama', 'recruiter', 'activity', 'achievements', 'contact']; // the hidden Glitch folder joins the end of the dock once unlocked
 
   const META = {
     blackfungus: { label: 'Black Fungus Detection', sprite: 'microscope', tip: 'Deep learning · Inception V3: 98.87% train / 98.25% test' },
@@ -18,19 +17,17 @@
     experience: { label: 'Experience & Research', sprite: 'cabinet', tip: 'Internship, research & client work' },
     resume: { label: 'Resume.pdf', sprite: 'pdf', tip: 'Download the one-page CV' },
     about: { label: 'About_me.md', sprite: 'about', tip: 'The short story' },
-    buildlog: { label: 'how_this_was_made.txt', sprite: 'terminal', tip: 'The AI workflow behind this site' },
-    secret: { label: 'life_outside_work.txt', sprite: 'secret', tip: 'You earned this one' },
+    glitch: { label: 'Glitch', sprite: 'glitch', tip: 'You found the last level' },
     ama: { label: 'Messages', sprite: 'chat', tip: 'Ask me anything' },
     recruiter: { label: 'Recruiter Mode', sprite: 'gear', tip: 'What are you hiring for?' },
     activity: { label: 'Activity Monitor', sprite: 'monitor', tip: 'Live analytics' },
     achievements: { label: 'Achievements', sprite: 'trophy', tip: 'Badges & progress' },
     contact: { label: 'Contact', sprite: 'mail', tip: 'Email · LinkedIn · GitHub' },
-    trash: { label: 'Trash', sprite: 'trash', tip: 'Rejected concepts' },
   };
   NM.meta = META;
 
   // XP for opening a window that is NOT a piece of work (folders earn a token amount; their cards earn the real XP)
-  const XP_ON_OPEN = { casecomps: 2, experience: 2, about: 3, contact: 3, buildlog: 5, activity: 5, achievements: 2, trash: 8, secret: 10, ama: 2, recruiter: 2 };
+  const XP_ON_OPEN = { casecomps: 2, experience: 2, about: 3, contact: 3, activity: 5, achievements: 2, glitch: 10, ama: 2, recruiter: 2 };
   // XP for each piece of work, once
   const WORK_XP = { blackfungus: 8, instructor: 8, brand: 8, bowl: 8, prodyssey: 8, sip: 6, sirp: 6, gcl: 6 };
 
@@ -71,7 +68,7 @@
   NM.openApp = async function (id) {
     if (NM.mobileActive) { NM.mobile.show(id); return; }
     if (id === 'resume') { NM.downloadCV('desktop'); return; }
-    if (id === 'secret' && !NM.game.secret) return;
+    if (id === 'glitch' && !NM.game.glitch) return;
     // a card inside a folder (e.g. 'brand'): open its folder and show that card
     const w = D.works[id];
     if (w && w.parent) {
@@ -141,34 +138,42 @@
     const col = $('#icons-right');
     col.innerHTML = '';
     RIGHT.forEach((id) => col.appendChild(makeIcon(id)));
-    if (NM.game.secret) addSecretIcon(false);
-  }
-
-  function addSecretIcon(fanfare) {
-    const col = $('#icons-right');
-    if ($('[data-app="secret"]', col)) return;
-    const ic = makeIcon('secret', 'secret sparkle');
-    col.appendChild(ic);
-    if (fanfare) setTimeout(() => ic.classList.remove('sparkle'), 4000); else ic.classList.remove('sparkle');
   }
 
   function renderDock() {
     const dock = $('#dock');
     dock.innerHTML = '';
-    DOCK.forEach((id) => {
-      if (id === '|') { dock.appendChild(h('<i class="dock-sep" aria-hidden="true"></i>')); return; }
-      const m = META[id];
-      const b = h('<button type="button" class="dock-item" data-app="' + id + '" aria-label="' + esc(m.label) + '"><span class="dock-tip"></span><span class="dock-img"></span><i class="run" aria-hidden="true"></i></button>');
-      $('.dock-tip', b).textContent = m.label;
-      $('.dock-img', b).appendChild(NM.sprites.img(m.sprite));
-      if (id === 'buildlog') b.classList.add('minor'); // a small, quiet icon
-      b.title = m.tip;
-      b.addEventListener('click', () => {
-        NM.sfx.play('click');
-        if (NM.wm.isOpen(id) && id !== 'blackfungus') NM.wm.toggleFromDock(id); else NM.openApp(id);
-      });
-      dock.appendChild(b);
+    DOCK.forEach((id) => dock.appendChild(makeDockItem(id)));
+    if (NM.game.glitch) addGlitchDock(false);
+  }
+
+  function makeDockItem(id) {
+    const m = META[id];
+    const b = h('<button type="button" class="dock-item" data-app="' + id + '" aria-label="' + esc(m.label) + '"><span class="dock-tip"></span><span class="dock-img"></span><i class="run" aria-hidden="true"></i></button>');
+    $('.dock-tip', b).textContent = m.label;
+    $('.dock-img', b).appendChild(NM.sprites.img(m.sprite));
+    b.title = m.tip;
+    b.addEventListener('click', () => {
+      NM.sfx.play('click');
+      if (NM.wm.isOpen(id) && id !== 'blackfungus') NM.wm.toggleFromDock(id); else NM.openApp(id);
     });
+    return b;
+  }
+
+  // The hidden Glitch folder: appears at the end of the dock (after a divider) once all 8 works are explored
+  function addGlitchDock(fanfare) {
+    const dock = $('#dock');
+    if (!dock || $('[data-app="glitch"]', dock)) return;
+    dock.appendChild(h('<i class="dock-sep glitch-sep" aria-hidden="true"></i>'));
+    const b = makeDockItem('glitch');
+    b.classList.add('glitchy');
+    if (fanfare || !NM.game.hasBadge('glitchfound')) b.classList.add('fresh'); // pulses until first opened
+    dock.appendChild(b);
+    refreshRunning();
+  }
+
+  function removeGlitchDock() {
+    $$('#dock .glitch-sep, #dock [data-app="glitch"]').forEach((e) => e.remove());
   }
 
   function refreshRunning() {
@@ -216,10 +221,10 @@
     for (let i = 0; i < pr.total; i++) pips.appendChild(h('<i class="' + (i < pr.done ? 'f' : '') + '"></i>'));
     $('#quest-n').textContent = 'Explored ' + pr.done + '/' + pr.total;
     let hint = '';
-    if (NM.game.secret) hint = '★ all found';
+    if (NM.game.glitch) hint = '★ Glitch unlocked';
     else if (pr.done === pr.total - 1) hint = 'one more…';
     $('#quest-hint').textContent = hint;
-    $('#quest').title = pr.done + ' of ' + pr.total + ' explored. Every project and every folder card counts (a folder itself does not) — and something is hidden. Find them all to unlock a secret.';
+    $('#quest').title = pr.done + ' of ' + pr.total + ' explored. Every project and every folder card counts (a folder itself does not). Explore them all to unlock a final reward.';
     refreshExploredTicks();
   }
 
@@ -236,13 +241,14 @@
     NM.toast({ title: 'Achievement unlocked', body: b.name + ' — ' + b.desc, sprite: b.sprite, kind: 'ach', ms: 4600 });
   });
   NM.on('progress', paintProgress);
-  NM.on('secret', () => {
-    NM.sfx.play('secret');
-    addSecretIcon(true);
+  NM.on('glitch', () => {
+    NM.sfx.play('unlock');
+    addGlitchDock(true);
     paintProgress();
-    NM.toast({ title: 'Secret file unlocked ★', body: 'A new icon appeared on the right of the desktop.', sprite: 'secret', kind: 'ach', ms: 6000 });
-    say('You found everything. Check the right side of the desktop…', 7000);
+    NM.toast({ title: 'Glitch unlocked ★', body: 'A hidden folder just appeared at the end of the dock.', sprite: 'glitch', kind: 'ach', ms: 6500 });
+    say('You explored everything. Something just appeared at the end of the dock…', 7500);
   });
+  NM.on('gamereset', () => { removeGlitchDock(); if (NM.wm.isOpen('glitch')) NM.wm.close('glitch'); });
 
   /* ---------- personalisation (Recruiter Mode) ---------- */
   function setSticky(text) {
@@ -258,7 +264,7 @@
       const on = !!(r && r.glow.indexOf(id) > -1);
       el.classList.toggle('glow', on);
       // only desktop icons dim; the dock stays fully usable
-      el.classList.toggle('dim', !!(r && !on && el.classList.contains('dicon') && id !== 'resume' && id !== 'about' && id !== 'secret'));
+      el.classList.toggle('dim', !!(r && !on && el.classList.contains('dicon') && id !== 'resume' && id !== 'about'));
     });
     const tag = $('#mb-mode');
     tag.hidden = !r;
@@ -302,10 +308,9 @@
   const HINTS = [
     'Psst — try Recruiter Mode in the dock.',
     'Stuck? Ask the assistant in Messages.',
-    'Not every icon is a project…',
+    'Open every project and folder card — finishing them unlocks something.',
     'The speaker up top turns on 8-bit sound.',
     'The XP bar fills as you explore.',
-    'Curious how this was made? Try the little terminal icon in the dock.',
   ];
   let hintN = 0, sayTimer = null;
   function say(text, ms) {
@@ -332,9 +337,8 @@
     NM.analytics.track.windowOpen(id);
     if (XP_ON_OPEN[id]) NM.game.award('open:' + id, XP_ON_OPEN[id]);
     if (D.works[id]) NM.workOpened(id);     // a standalone project window (Black Fungus, Instructor Aid)
-    else if (id === 'trash') NM.game.markExplored('trash');
+    if (id === 'glitch') { const gi = $('.dock-item[data-app="glitch"]'); if (gi) gi.classList.remove('fresh'); }
     refreshRunning();
-    if (id === 'trash') NM.sfx.play('trash');
   });
   NM.on('wm:close', refreshRunning);
   NM.on('wm:min', refreshRunning);
@@ -370,14 +374,8 @@
     $('#mb-xp').addEventListener('click', () => NM.openApp('achievements'));
     $('#avatar-btn').addEventListener('click', () => { NM.sfx.play('click'); say(HINTS[hintN++ % HINTS.length], 5200); });
 
-    // gentle nudge toward the trash can once the obvious things are explored
-    setInterval(() => {
-      const pr = NM.game.progress();
-      if (pr.done >= pr.total - 3 && !NM.game.isExplored('trash') && !NM.wm.isOpen('trash')) {
-        const t = $('.dock-item[data-app="trash"]');
-        if (t) { t.classList.add('wiggle'); setTimeout(() => t.classList.remove('wiggle'), 1400); }
-      }
-    }, 14000);
+    // saved progress may already qualify for the Glitch folder (e.g. progress saved before this layout)
+    NM.game.recheck();
   }
 
   /* ---------- boot ---------- */
@@ -453,7 +451,6 @@
     $('#l-in').addEventListener('click', () => NM.analytics.track.contact('linkedin'));
     $('#l-gh').addEventListener('click', () => NM.analytics.track.contact('github'));
     $('#l-em').addEventListener('click', () => NM.analytics.track.contact('email'));
-    if (NM.isMobile()) $('#enter').textContent = 'Explore my work >';
     fillClouds($('#landing .clouds'), [
       { top: 8, w: 300, o: 0.8, d: 120, delay: 30 },
       { top: 40, w: 240, o: 0.6, d: 160, delay: 90 },

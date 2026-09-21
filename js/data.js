@@ -18,7 +18,7 @@
 
   /* The unit of "work" is the LEAF: a project window, or one card inside a folder.
      Opening a folder on its own counts for nothing; opening a card counts as that work.
-     The same rule drives progress, the secret unlock, XP and the analytics "projects clicked" metric. */
+     The same rule drives progress, the Glitch unlock, XP and the analytics "projects clicked" metric. */
   const works = {
     blackfungus: { label: 'Black Fungus Detection', parent: null },
     instructor: { label: 'Instructor Aid System', parent: null },
@@ -75,10 +75,10 @@
     },
     content: {
       label: 'Content', glyph: 'terminal',
-      glow: ['experience', 'buildlog'],
-      why: 'GCL project on AI in content creation + the AI workflow behind this site',
+      glow: ['experience', 'ama'],
+      why: 'GCL project on AI in content creation + the assistant built into this site',
       sticky: 'Studied how AI reshapes content workflows — and co-designed PostGenie AI.',
-      greeting: "Hiring for <b>Content</b>? The <b>GCL project</b> in Experience mapped a 6-stage AI content journey with 15+ practitioner interviews; <b>how_this_was_made.txt</b> shows AI-assisted copy and storytelling in practice.",
+      greeting: "Hiring for <b>Content</b>? The <b>GCL project</b> in Experience mapped a 6-stage AI content journey with 15+ practitioner interviews and proposed PostGenie AI; the <b>Messages</b> assistant on this desktop is a small example of AI-assisted content in action.",
       chips: ['Tell me about the GCL project', 'How was this site made?', 'What is PostGenie AI?'],
     },
     mediabuying: {
@@ -91,18 +91,18 @@
     },
     media: {
       label: 'Media', glyph: 'monitor',
-      glow: ['buildlog', 'activity'],
-      why: 'This site: AI-assisted creation, analytics and gamification in one build',
+      glow: ['activity', 'achievements'],
+      why: 'This site: analytics and gamification in one build',
       sticky: 'Media & Entertainment PGDM with an engineer’s toolkit: AI, analytics, gamification.',
-      greeting: "Hiring for <b>Media</b>? This site is the case study — open <b>how_this_was_made.txt</b> for the AI workflow and <b>Activity Monitor</b> for the analytics thinking.",
+      greeting: "Hiring for <b>Media</b>? This site is the case study — open <b>Activity Monitor</b> for the analytics thinking and <b>Achievements</b> for the gamification.",
       chips: ['How was this site made?', 'How does the analytics work?', 'Tell me about the GCL project'],
     },
     xd: {
       label: 'Experience Design', glyph: 'gear',
-      glow: ['buildlog', 'instructor'],
-      why: 'This portfolio (the OS metaphor) + Instructor Aid System (UX for a real user)',
+      glow: ['instructor', 'achievements'],
+      why: 'This portfolio (the OS metaphor and its game layer) + Instructor Aid System (UX for a real user)',
       sticky: 'I design experiences like systems — this desktop is the case study.',
-      greeting: "Hiring for <b>Experience Design</b>? <b>Instructor Aid</b> started from a real user pain (a teacher tracking several classes); this desktop OS is a full experience-design exercise, documented in <b>how_this_was_made.txt</b>.",
+      greeting: "Hiring for <b>Experience Design</b>? <b>Instructor Aid</b> started from a real user pain (a teacher tracking several classes); this desktop OS is a full experience-design exercise — a game-like interface with XP, badges and a hidden level.",
       chips: ['Tell me about Instructor Aid', 'How was this site made?', 'Tell me about game design experience'],
     },
   };
@@ -198,9 +198,9 @@
         "• <b>Build</b> — Black Fungus Detection: 5 deep-learning architectures compared; Inception V3 was the top performer (98.87% train / 98.25% test) and shipped as a Flask web app.",
         "• <b>Research</b> — SIRP: a systematic review of 39 studies on algorithmic transparency and explainable AI in the personalization–privacy paradox.",
         "• <b>Apply</b> — GCL: a 6-stage AI content journey from 15+ practitioner interviews, and the proposed PostGenie AI platform.",
-        "• <b>Create</b> — this site: AI-assisted from avatar to audio (see how_this_was_made.txt).",
+        "• <b>Create</b> — this site: the avatar, icons and sound pack were all created with AI.",
       ],
-      open: ['blackfungus', 'sirp', 'gcl', 'buildlog'],
+      open: ['blackfungus', 'sirp', 'gcl'],
     },
     {
       id: 'leadership', title: 'Leadership', src: 'Resume (Responsibilities) · SIP · Prodyssey',
@@ -302,10 +302,10 @@
     },
     {
       id: 'games', title: 'Game design & UX', src: 'Resume · One-minute intro',
-      keys: [['game*', 5], ['gamif*', 4], ['unity', 4], ['ux', 4], ['figma', 4], ['ammachi', 5], ['diksha', 4], ['game jam', 5], ['design experience', 4]],
+      keys: [['game*', 5], ['gamif*', 4], ['unity', 4], ['ux', 4], ['figma', 4], ['ammachi', 5], ['diksha', 4], ['game jam', 5], ['design experience', 4], ['glitch', 4], ['club', 3]],
       a: [
         "Before management school, Nandita interned at <b>Ammachi Labs</b> (Apr–Sep 2022) as a Game Design & UX intern — designing educational 2D games that build cognitive skills in children, and creating wireframes and design flows in Figma for the DIKSHA initiative (Ministry of Education, Govt. of India).",
-        "She also completed a C# Unity game-developer course (2021), was part of a game-development club, and competed in an international game jam. This portfolio's XP system and badges are that instinct at work.",
+        "She also completed a C# Unity game-developer course (2021). At university she was part of <b>Glitch</b>, her college's game-development club: she took part in an International Unity Game Jam competition and helped organise the event at her college. This portfolio's XP system and badges are that instinct at work.",
       ],
       open: ['about'],
     },
@@ -370,12 +370,13 @@
       open: ['activity'],
     },
     {
-      id: 'site', title: 'How this site was made', src: 'Build log',
-      keys: [['this site', 5], ['this website', 5], ['how was this', 6], ['how did you build', 5], ['how is this made', 5], ['built this', 4], ['made this', 4], ['ai assisted', 4], ['ai-assisted', 4], ['build log', 5], ['prompt*', 3]],
+      id: 'site', title: 'How this site was made', src: 'Portfolio',
+      keys: [['this site', 5], ['this website', 5], ['how was this', 6], ['how did you build', 5], ['how is this made', 5], ['built this', 4], ['made this', 4], ['ai assisted', 4], ['ai-assisted', 4], ['pixel art', 4], ['why is this', 4]],
       a: [
-        "The whole desktop was created by AI writing code: Claude drew the pixel avatar with Python/Pillow, and wrote the procedural code that draws every icon and synthesises the sound pack — plus the microcopy and this assistant's logic. The build log (the small terminal icon in the dock) documents what was AI-made, what was hand-checked, and the trade-offs (why a prototype agent instead of a live API key).",
+        "The desktop is a game-style interface — a nod to Nandita's game-development background — written in plain HTML, CSS and JavaScript.",
+        "The avatar, icons and sound pack were created with AI: Claude wrote the code that draws the pixel art and synthesises the 8-bit sounds. Nandita directed the concept and checked every fact against her own documents. Want the full story? Ask her by email.",
       ],
-      open: ['buildlog'],
+      open: ['contact'],
     },
     {
       id: 'meta', title: 'About this assistant', src: 'Site design',
@@ -384,7 +385,6 @@
         "I'm a <b>prototype</b> assistant: rule-based intent matching over a hand-written knowledge base of Nandita's real background. That means I can't make things up — if I don't know, I'll say so.",
         "It's deliberately transparent (tap \"Why this answer?\" under any reply) — a design choice that echoes her SIRP research: explanations work when they're specific and in context. The code is structured so a live LLM behind a serverless proxy can be switched on later.",
       ],
-      open: ['buildlog'],
     },
     {
       id: 'contact', title: 'Contact', src: 'Contact window',
@@ -409,9 +409,12 @@
       a: ["Nandita works in five languages: English, Hindi, Malayalam, Telugu and Tamil."],
     },
     {
-      id: 'hobbies', title: 'Outside work', src: 'Resume',
-      keys: [['hobb*', 5], ['interests', 4], ['free time', 4], ['outside work', 5], ['for fun', 4], ['dance', 3], ['dancing', 3], ['reading', 3], ['personal life', 4]],
-      a: ["On paper: dancing and reading. Off paper — there's a secret file on this desktop for people who explore everything. (Hint: the trash can is part of the trail.)"],
+      id: 'hobbies', title: 'Outside work', src: 'Resume · Nandita',
+      keys: [['hobb*', 5], ['interests', 4], ['free time', 4], ['outside work', 5], ['for fun', 4], ['dance', 3], ['dancing', 3], ['reading', 3], ['personal life', 4], ['music', 3], ['cafe*', 3], ['cat*', 3], ['dog*', 3], ['pets', 3]],
+      a: [
+        "Music, dancing, reading and café hopping (she loves exploring new cafés). She also loves cats and dogs equally, and firmly refuses to pick a side in the cats-versus-dogs debate.",
+        "And there's something hidden on this desktop for people who explore everything.",
+      ],
     },
     {
       id: 'logistics', title: 'Availability & compensation', src: 'Not in knowledge base',
@@ -429,16 +432,5 @@
     },
   ];
 
-  // The trash can: "Rejected Concepts"
-  const rejected = [
-    { file: 'portfolio_v1_beige.psd', note: 'Tasteful. Forgettable. Would have been tab #200 for a recruiter.' },
-    { file: '3d_vr_portfolio_fullbody.blend', note: 'Great pitch, fatal flaw: nobody wants to strap on a headset to read a résumé.' },
-    { file: 'api_key_in_javascript.txt', note: 'Security review: 0/10. Became the prototype-agent decision (and a serverless-proxy upgrade path).' },
-    { file: 'unskippable_45s_intro.mp4', note: 'Cut to under three seconds, with a Skip button. Recruiters have places to be.' },
-    { file: 'autoplay_chiptune.mp3', note: 'Sound is opt-in now. Nobody needs surprise 8-bit in a meeting.' },
-    { file: 'rainbow_cursor_trail.js', note: 'Charming for four seconds. Then a headache.' },
-    { file: 'resume_final_FINAL_v7_REAL.pdf', note: 'There is exactly one résumé now. It is on the desktop.' },
-  ];
-
-  NM.data = { person, works, folders, WORKS, PROJECTS, iconOf, roles, ROLE_ORDER, defaultChips, kb, rejected };
+  NM.data = { person, works, folders, WORKS, PROJECTS, iconOf, roles, ROLE_ORDER, defaultChips, kb };
 })();

@@ -311,7 +311,8 @@
       detail.scrollIntoView({ behavior: NM.reducedMotion() ? 'auto' : 'smooth', block: 'nearest' });
       NM.sfx.play('flip');
       NM.analytics.track.windowOpen('card:' + id); // "pages viewed"
-      NM.workOpened(id);                            // projects clicked + XP + exploration progress
+      // a piece of work feeds projects clicked + XP + exploration progress; other cards (e.g. Glitch) use their own hook
+      if (NM.data.works[id]) NM.workOpened(id); else if (o.onCard) o.onCard(id);
     }
 
     items.forEach((it) => {
@@ -329,6 +330,8 @@
     NM.on('folder:show', (e) => { if (root.isConnected && e.folder === o.folder) show(e.card); });
     if (ctx && ctx.card) show(ctx.card);
   }
+
+  NM.apps.helpers.folderWindow = folderWindow;
 
   /* ================= 3. CASE COMPS ================= */
   const brandSlides = [

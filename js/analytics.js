@@ -27,7 +27,7 @@
   // ---- simulated audience for the class demo (clearly labelled in the UI) ----
   const DEMO = {
     visitors: 47,
-    windowViews: { casecomps: 58, experience: 44, blackfungus: 33, instructor: 17, ama: 52, recruiter: 29, about: 26, contact: 19, buildlog: 21, activity: 9, achievements: 12, trash: 8 },
+    windowViews: { casecomps: 58, experience: 44, blackfungus: 33, instructor: 17, ama: 52, recruiter: 29, about: 26, contact: 19, activity: 9, achievements: 12, glitch: 6 },
     // per piece of work (a project window or one folder card)
     projectClicks: { brand: 41, blackfungus: 33, sip: 27, prodyssey: 24, bowl: 19, instructor: 17, sirp: 15, gcl: 12 },
     cv: 14,
@@ -174,7 +174,7 @@
         out.push({ icon: 'chat', text: 'Top question theme: <b>' + (entry ? entry.title : ranked[0]) + '</b> (' + counts[ranked[0]] + '×) → promote it to a suggested chip.' });
       }
       const missed = counts.unknown || 0;
-      if (missed) out.push({ icon: 'trash', text: '<b>' + missed + '</b> question' + (missed > 1 ? 's' : '') + ' hit the fallback → read them in the feed and add knowledge-base entries.' });
+      if (missed) out.push({ icon: 'chat', text: '<b>' + missed + '</b> question' + (missed > 1 ? 's' : '') + ' hit the fallback → read them in the feed and add knowledge-base entries.' });
     }
     if (v.visitors >= 1 && v.avgSeconds > 0) {
       out.push({

@@ -75,8 +75,8 @@
     send() { tone(660, 0.05, { vol: 0.05 }); tone(990, 0.07, { when: 0.05, vol: 0.05 }); },
     receive() { tone(740, 0.06, { vol: 0.05, type: 'triangle' }); tone(587, 0.08, { when: 0.06, vol: 0.05, type: 'triangle' }); },
     error() { tone(220, 0.14, { type: 'sawtooth', vol: 0.05, slideTo: 140 }); },
-    trash() { tone(300, 0.09, { type: 'sawtooth', vol: 0.05, slideTo: 90 }); noise(0.12, { freq: 900, vol: 0.1, when: 0.05 }); },
-    secret() { seq([392, 523, 659, 784, 988, 1175, 1568], 0.08, { type: 'triangle', vol: 0.08, len: 0.2 }); },
+    reset() { tone(300, 0.09, { type: 'sawtooth', vol: 0.05, slideTo: 90 }); noise(0.12, { freq: 900, vol: 0.1, when: 0.05 }); },
+    unlock() { seq([392, 523, 659, 784, 988, 1175, 1568], 0.08, { type: 'triangle', vol: 0.08, len: 0.2 }); },
     tick() { tone(1400, 0.025, { vol: 0.025 }); },
   };
 
@@ -97,12 +97,6 @@
       NM.emit('sound', enabled);
     },
     toggle() { NM.sfx.set(!enabled); },
-    // Explicit "play this sound" buttons (Build Log) — the click itself is the opt-in
-    preview(name) {
-      const c = ensure();
-      if (c && c.state === 'suspended') c.resume();
-      if (SOUNDS[name]) SOUNDS[name]();
-    },
   };
   // Note: sound state is intentionally NOT restored as "on" from storage — a classroom or
   // office should never get a surprise audio blast. The visitor must opt in each visit.

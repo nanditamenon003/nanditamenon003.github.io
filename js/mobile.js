@@ -12,17 +12,15 @@
     ['casecomps', 'Brand Alchemy · Marketing Bowl · Prodyssey'],
     ['experience', 'Internship, research & client work'],
     ['about', 'The short story'],
-    ['buildlog', 'How the AI workflow made this site'],
     ['activity', 'Live analytics & insights'],
-    ['trash', 'Rejected concepts'],
   ];
-  const SECRET_CARD = ['secret', 'You explored everything'];
+  // the hidden Glitch folder is added once all 8 pieces of work have been explored (same rule as the desktop)
+  const GLITCH_CARD = ['glitch', 'You explored everything. This is the last level.'];
   const LABELS = {
     blackfungus: 'Black Fungus Detection', instructor: 'Instructor Aid System', casecomps: 'Case Comps',
-    experience: 'Experience & Research', about: 'About Nandita', buildlog: 'how_this_was_made.txt', activity: 'Activity Monitor',
-    trash: 'Trash', secret: 'life_outside_work.txt',
+    experience: 'Experience & Research', about: 'About Nandita', activity: 'Activity Monitor', glitch: 'Glitch',
   };
-  const SPRITES = { blackfungus: 'microscope', instructor: 'gradebook', casecomps: 'podium', experience: 'cabinet', about: 'about', buildlog: 'terminal', activity: 'monitor', trash: 'trash', secret: 'secret' };
+  const SPRITES = { blackfungus: 'microscope', instructor: 'gradebook', casecomps: 'podium', experience: 'cabinet', about: 'about', activity: 'monitor', glitch: 'glitch' };
 
   let root = null;
   const opened = {};
@@ -40,11 +38,11 @@
     }
     btn.setAttribute('aria-expanded', 'true');
     body.hidden = false;
+    card.classList.remove('fresh');
     if (!opened[id]) {
       opened[id] = true;
       if (id === 'blackfungus') NM.apps.scan().then(() => {});
       NM.apps.defs[id].content(body, ctx);
-      if (id === 'buildlog') body.classList.add('term');
     }
     NM.emit('wm:open', id);
     NM.sfx.play('open');
@@ -59,7 +57,7 @@
       '<header class="m-head"><img class="px" src="assets/nandita_pixel_avatar.png" alt="">' +
         '<div class="m-id"><b>Nandita Menon</b><span>' + esc(P.tagline) + '</span></div>' +
         '<button type="button" class="m-snd" id="m-snd" aria-pressed="false" aria-label="Turn on 8-bit sound">♪</button>' +
-        '<span class="m-stats"><span class="m-xp" id="m-xp">LV1 · 0%</span><span class="m-prog" id="m-prog" title="Every project and every folder card counts; something is hidden">Explored 0/9</span></span></header>' +
+        '<span class="m-stats"><span class="m-xp" id="m-xp">LV1 · 0%</span><span class="m-prog" id="m-prog" title="Every project and every folder card counts (a folder itself does not). Explore them all to unlock a final reward.">Explored 0/8</span></span></header>' +
       '<section class="m-sec m-hero">' +
         '<div class="plabel">PORTFOLIO.EXE</div>' +
         '<p>Computer-science engineer turned media &amp; brand strategist. PGDM Media &amp; Entertainment \'27, WeSchool Mumbai.</p>' +
@@ -73,7 +71,7 @@
       '<section class="m-sec"><h2>Work &amp; more</h2><div class="m-cards" id="m-cards"></div></section>' +
       '<section class="m-sec" id="m-ask"><h2>Ask me anything</h2><div class="m-chatbox" id="m-chat"></div></section>' +
       '<section class="m-sec" id="m-contact"><h2>Contact</h2><div id="m-contact-b"></div></section>' +
-      '<footer class="m-foot">Built with AI assistance · <button type="button" class="linkbtn" id="m-log">how this was made</button></footer>';
+      '<footer class="m-foot">Nandita Menon · Portfolio</footer>';
 
     const cards = $('#m-cards', root);
     const makeCard = (id, sub) => {
@@ -89,10 +87,14 @@
       cards.appendChild(c);
     };
     CARDS.forEach(([id, sub]) => makeCard(id, sub));
-    // the secret file appears once everything has been explored (same rule as the desktop)
-    const addSecret = () => { if (!$('.m-card[data-app="secret"]', root)) makeCard(SECRET_CARD[0], SECRET_CARD[1]); };
-    if (NM.game.secret) addSecret();
-    NM.on('secret', () => { addSecret(); const c = $('.m-card[data-app="secret"]', root); if (c) c.classList.add('sparkle'); });
+    const addGlitch = () => { if (!$('.m-card[data-app="glitch"]', root)) makeCard(GLITCH_CARD[0], GLITCH_CARD[1]); };
+    if (NM.game.glitch) addGlitch();
+    NM.on('glitch', () => {
+      addGlitch();
+      const c = $('.m-card[data-app="glitch"]', root);
+      if (c) { c.classList.add('glitchy', 'fresh'); setTimeout(() => c.scrollIntoView({ behavior: NM.reducedMotion() ? 'auto' : 'smooth', block: 'center' }), 400); }
+    });
+    NM.on('gamereset', () => { const c = $('.m-card[data-app="glitch"]', root); if (c) c.remove(); });
 
     const chips = $('#m-chips', root);
     D.ROLE_ORDER.forEach((k) => {
@@ -108,7 +110,6 @@
 
     $('#m-cv', root).addEventListener('click', () => NM.downloadCV('mobile'));
     $$('.m-actions a', root).forEach((a) => a.addEventListener('click', () => NM.analytics.track.contact(a.dataset.k)));
-    $('#m-log', root).addEventListener('click', () => show('buildlog'));
     $('#m-snd', root).addEventListener('click', () => NM.sfx.toggle());
 
     const paintXp = () => { $('#m-xp', root).textContent = (NM.game.level >= 5 ? 'MAX' : 'LV' + NM.game.level) + ' · ' + Math.round((NM.game.xp / NM.game.MAX_XP) * 100) + '%'; };
@@ -127,7 +128,7 @@
     $$('.m-card', root).forEach((c) => {
       const on = !!(r && r.glow.indexOf(c.dataset.app) > -1);
       c.classList.toggle('glow', on);
-      c.classList.toggle('dim', !!(r && !on && c.dataset.app !== 'secret' && c.dataset.app !== 'about'));
+      c.classList.toggle('dim', !!(r && !on && c.dataset.app !== 'glitch' && c.dataset.app !== 'about'));
     });
     if (r) {
       // float the two best-fit cards to the top of the list

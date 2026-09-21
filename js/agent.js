@@ -18,7 +18,7 @@
   ];
 
   const APP_LABELS = {
-    about: 'About Nandita', contact: 'Contact', buildlog: 'how_this_was_made.txt', activity: 'Activity Monitor',
+    about: 'About Nandita', contact: 'Contact', activity: 'Activity Monitor',
     achievements: 'Achievements', recruiter: 'Recruiter Mode',
   };
   const labelFor = (id) => (NM.data.works[id] ? NM.data.works[id].label : NM.data.folders[id] ? NM.data.folders[id].label : APP_LABELS[id] || id);

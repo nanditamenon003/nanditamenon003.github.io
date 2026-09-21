@@ -1,10 +1,11 @@
-/* game.js — XP meter, levels, badges and the exploration tracker that unlocks the secret file.
+/* game.js — XP meter, levels, badges and the exploration tracker that unlocks the Glitch folder.
 
-   COUNTING RULE (applied everywhere — progress, secret unlock, XP, analytics "projects clicked"):
+   COUNTING RULE (applied everywhere — progress, the Glitch unlock, XP, analytics "projects clicked"):
    the unit is a piece of WORK = a project window (Black Fungus, Instructor Aid) or one CARD inside a folder
-   (Brand Alchemy, Marketing Bowl, Prodyssey, SIP, SIRP, GCL). Opening a folder window by itself earns a
-   small amount of XP but does NOT count as exploring anything inside it.
-   Explorable set = 8 works + the trash can = 9 items. */
+   (Brand Alchemy, Marketing Bowl, Prodyssey, SIP, SIRP, GCL). Opening a folder window on its own earns a
+   token amount of XP but does NOT count as exploring anything inside it.
+   Explorable set = 8 pieces of work. Exploring all 8 unlocks the Glitch folder — the final reward.
+   The three cards inside Glitch are a reward, not "work": they earn XP and a badge but never count toward the 8. */
 (function () {
   'use strict';
   const NM = window.NM;
@@ -19,15 +20,15 @@
     { id: 'scout', name: 'Talent Scout', desc: 'Used Recruiter Mode to guide the tour.', hint: 'Tell the desktop what you are hiring for.', sprite: 'gear' },
     { id: 'papertrail', name: 'Paper Trail', desc: 'Downloaded the resume.', hint: 'Grab the CV.', sprite: 'pdf' },
     { id: 'datanerd', name: 'Data Nerd', desc: 'Opened the Activity Monitor.', hint: 'Look at how the site tracks itself.', sprite: 'monitor' },
-    { id: 'behind', name: 'Behind the Scenes', desc: 'Read the AI build log.', hint: 'Find out how this was made.', sprite: 'terminal' },
-    { id: 'archaeologist', name: 'Archaeologist', desc: 'Dug through the trash can.', hint: 'Not everything ends up in the trash…', sprite: 'trash' },
-    { id: 'fullcoverage', name: 'Full Coverage', desc: 'Explored every piece of work and unlocked the secret file.', hint: 'Open every project, every folder card, and the trash.', sprite: 'secret' },
+    { id: 'levelcomplete', name: 'Level Complete', desc: 'Explored every piece of work — 8 of 8.', hint: 'Open both projects and every card in the folders.', sprite: 'podium' },
+    { id: 'glitchfound', name: 'Found the Glitch', desc: 'Opened the hidden Glitch folder.', hint: 'Finish exploring the work, then look at the end of the dock.', sprite: 'glitch' },
+    { id: 'playerone', name: 'Player One', desc: 'Opened all three cards inside Glitch.', hint: 'Open every card in the Glitch folder.', sprite: 'gamepad' },
     { id: 'completionist', name: 'Completionist', desc: 'Filled the System Usage meter to 100%.', hint: 'Keep exploring until the bar is full.', sprite: 'trophy' },
   ];
 
-  const EXPLORE_TARGETS = NM.data.WORKS.concat(['trash']);
+  const EXPLORE_TARGETS = NM.data.WORKS.slice();
 
-  const fresh = () => ({ xp: 0, done: {}, badges: {}, explored: {}, secret: false });
+  const fresh = () => ({ xp: 0, done: {}, badges: {}, explored: {}, glitch: false });
   let S = Object.assign(fresh(), NM.store.get(KEY, {}));
   S.done = S.done || {}; S.badges = S.badges || {}; S.explored = S.explored || {};
   const save = () => NM.store.set(KEY, S);
@@ -50,18 +51,18 @@
     if (S.done['role:any']) unlockBadge('scout');
     if (S.done.cv) unlockBadge('papertrail');
     if (S.done['open:activity']) unlockBadge('datanerd');
-    if (S.done['open:buildlog']) unlockBadge('behind');
-    if (S.explored.trash) unlockBadge('archaeologist');
-    if (S.secret) unlockBadge('fullcoverage');
+    if (S.glitch) unlockBadge('levelcomplete');
+    if (S.done['open:glitch']) unlockBadge('glitchfound');
+    if (n('glitchcard:') >= 3) unlockBadge('playerone');
     if (S.xp >= MAX_XP) unlockBadge('completionist');
   }
 
-  function checkSecret() {
-    if (S.secret) return;
+  function checkGlitch() {
+    if (S.glitch) return;
     if (EXPLORE_TARGETS.every((t) => S.explored[t])) {
-      S.secret = true;
+      S.glitch = true;
       save();
-      NM.emit('secret');
+      NM.emit('glitch');
     }
   }
 
@@ -77,7 +78,7 @@
     LEVELS,
     get xp() { return S.xp; },
     get level() { return levelOf(S.xp); },
-    get secret() { return S.secret; },
+    get glitch() { return S.glitch; },
     hasBadge: (id) => !!S.badges[id],
     badgeTime: (id) => S.badges[id],
     isExplored: (id) => !!S.explored[id],
@@ -97,10 +98,12 @@
       if (EXPLORE_TARGETS.indexOf(id) === -1 || S.explored[id]) return;
       S.explored[id] = true;
       save();
-      checkSecret(); // before the progress event, so listeners see the final state
+      checkGlitch(); // before the progress event, so listeners see the final state
       NM.emit('progress', progress());
       checkBadges();
     },
+    // Called when the desktop is built: unlocks Glitch if saved progress already qualifies
+    recheck() { checkGlitch(); checkBadges(); },
     progress,
     reset() {
       S = fresh();

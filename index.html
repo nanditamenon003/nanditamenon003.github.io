@@ -89,10 +89,11 @@
       <p id="sticky-text">Debugging my way from tech to brand strategy.</p>
     </aside>
 
-    <div class="quest" id="quest" aria-live="polite">
-      <span class="quest-t">EXPLORED</span>
+    <div class="quest" id="quest" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-label="Exploration progress — show what is left">
+      <span class="quest-t">PROGRESS</span>
       <span class="quest-pips" id="quest-pips"></span>
-      <span class="quest-n" id="quest-n"></span>
+      <span class="quest-lock" id="quest-lock"></span>
+      <span class="quest-n" id="quest-n" aria-live="polite"></span>
       <span class="quest-hint" id="quest-hint"></span>
     </div>
 
@@ -124,6 +125,7 @@
   <script src="js/apps.js"></script>
   <script src="js/apps-os.js"></script>
   <script src="js/glitch.js"></script>
+  <script src="js/progress.js"></script>
   <script src="js/mobile.js"></script>
   <script src="js/main.js"></script>
 </body>

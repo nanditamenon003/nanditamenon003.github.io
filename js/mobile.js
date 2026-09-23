@@ -57,7 +57,7 @@
       '<header class="m-head"><img class="px" src="assets/nandita_pixel_avatar.png" alt="">' +
         '<div class="m-id"><b>Nandita Menon</b><span>' + esc(P.tagline) + '</span></div>' +
         '<button type="button" class="m-snd" id="m-snd" aria-pressed="false" aria-label="Turn on 8-bit sound">♪</button>' +
-        '<span class="m-stats"><span class="m-xp" id="m-xp">LV1 · 0%</span><span class="m-prog" id="m-prog" title="Every project and every folder card counts (a folder itself does not). Explore them all to unlock a final reward.">Explored 0/8</span></span></header>' +
+        '<span class="m-stats"><span class="m-xp" id="m-xp">LV1 · 0%</span><span class="m-prog" id="m-prog" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-label="Exploration progress — show what is left"><span class="quest-pips" id="m-pips"></span><span class="quest-lock" id="m-lock"></span><span class="quest-n" id="m-prog-n" aria-live="polite"></span></span></span></header>' +
       '<section class="m-sec m-hero">' +
         '<div class="plabel">PORTFOLIO.EXE</div>' +
         '<p>Computer-science engineer turned media &amp; brand strategist. PGDM Media &amp; Entertainment \'27, WeSchool Mumbai.</p>' +
@@ -113,10 +113,8 @@
     $('#m-snd', root).addEventListener('click', () => NM.sfx.toggle());
 
     const paintXp = () => { $('#m-xp', root).textContent = (NM.game.level >= 5 ? 'MAX' : 'LV' + NM.game.level) + ' · ' + Math.round((NM.game.xp / NM.game.MAX_XP) * 100) + '%'; };
-    const paintProg = () => { const p = NM.game.progress(); $('#m-prog', root).textContent = 'Explored ' + p.done + '/' + p.total; };
     NM.on('xp', paintXp);
-    NM.on('progress', paintProg);
-    paintProg();
+    NM.progressUI.mount($('#m-prog', root), { pips: '#m-pips', lock: '#m-lock', count: '#m-prog-n', place: 'down', unlockedTip: 'Unlocked — Glitch is in Work & more' });
     NM.on('sound', (on) => { const b = $('#m-snd', root); b.setAttribute('aria-pressed', on); b.classList.toggle('on', on); });
     paintXp();
   }

@@ -215,16 +215,12 @@
   }
 
   function paintProgress() {
+    // pips, count, padlock and the checklist popover are painted by progress.js
     const pr = NM.game.progress();
-    const pips = $('#quest-pips');
-    pips.innerHTML = '';
-    for (let i = 0; i < pr.total; i++) pips.appendChild(h('<i class="' + (i < pr.done ? 'f' : '') + '"></i>'));
-    $('#quest-n').textContent = 'Explored ' + pr.done + '/' + pr.total;
     let hint = '';
     if (NM.game.glitch) hint = '★ Glitch unlocked';
     else if (pr.done === pr.total - 1) hint = 'one more…';
     $('#quest-hint').textContent = hint;
-    $('#quest').title = pr.done + ' of ' + pr.total + ' explored. Every project and every folder card counts (a folder itself does not). Explore them all to unlock a final reward.';
     refreshExploredTicks();
   }
 
@@ -244,8 +240,7 @@
   NM.on('glitch', () => {
     NM.sfx.play('unlock');
     addGlitchDock(true);
-    paintProgress();
-    NM.toast({ title: 'Glitch unlocked ★', body: 'A hidden folder just appeared at the end of the dock.', sprite: 'glitch', kind: 'ach', ms: 6500 });
+    paintProgress(); // the 100% milestone toast (progress.js) announces the unlock
     say('You explored everything. Something just appeared at the end of the dock…', 7500);
   });
   NM.on('gamereset', () => { removeGlitchDock(); if (NM.wm.isOpen('glitch')) NM.wm.close('glitch'); });
@@ -363,6 +358,7 @@
     renderRight();
     renderDock();
     paintXP();
+    NM.progressUI.mount($('#quest'), { pips: '#quest-pips', lock: '#quest-lock', count: '#quest-n', place: 'up', unlockedTip: 'Unlocked — Glitch is at the end of the dock' });
     paintProgress();
     paintSound(NM.sfx.enabled);
     tickClock();

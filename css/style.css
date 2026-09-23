@@ -184,6 +184,52 @@ img.px, .px { image-rendering: pixelated; image-rendering: crisp-edges; }
 .quest-pips i { width: 12px; height: 12px; border: 2px solid var(--navy); background: #fff; }
 .quest-pips i.f { background: var(--mint); }
 .quest-hint { font-weight: 500; color: var(--muted); font-style: italic; }
+.quest { cursor: pointer; }
+.quest.open { z-index: 5100; }
+.quest:focus-visible, .m-prog:focus-visible { outline: 3px dashed var(--pink-d); outline-offset: 3px; }
+.quest-pips i { transition: background 0.3s ease; }
+
+/* padlock at the end of the bar + its tooltip */
+.quest-lock { position: relative; display: inline-flex; align-items: center; cursor: help; }
+.padlock { display: block; }
+.padlock .n { fill: var(--navy); }
+.padlock .b { fill: #FFD86B; }
+.padlock .k { fill: var(--navy); }
+.padlock.open .b { fill: var(--mint); }
+.lock-tip { position: absolute; z-index: 2; left: 50%; bottom: calc(100% + 10px); transform: translateX(-30%); white-space: nowrap; padding: 6px 8px; background: var(--navy); color: #fff; font-family: var(--px); font-size: 7px; font-weight: 400; line-height: 1.4; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.15s ease; }
+.quest-lock.tip-on .lock-tip { opacity: 1; visibility: visible; }
+@media (hover: hover) { .quest-lock:hover .lock-tip { opacity: 1; visibility: visible; } }
+
+/* checklist popover: hover on desktop, tap-to-open on touch */
+.qpop { position: absolute; z-index: 3; width: 264px; max-width: calc(100vw - 28px); padding: 10px 12px 12px; background: #fff; border: 3px solid var(--navy); box-shadow: 4px 4px 0 var(--navy); color: var(--navy); font-family: var(--sans); font-size: 12px; font-weight: 500; line-height: 1.4; white-space: normal; text-align: left; cursor: default; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s; }
+.qpop.up { left: -3px; bottom: calc(100% + 12px); }
+.qpop.up::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 14px; }
+.qpop.down { right: -4px; top: calc(100% + 10px); transform: translateY(-6px); }
+.quest.open .qpop, .m-prog.open .qpop { opacity: 1; visibility: visible; transform: none; }
+.qpop-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 2px dashed rgba(26, 36, 66, 0.25); }
+.qpop-h b { font-family: var(--px); font-size: 8px; font-weight: 400; line-height: 1.4; color: var(--pink-d); }
+.qpop-h span { font-family: var(--sans); font-size: 10.5px; color: var(--muted); }
+.qpop-g { margin: 6px 0; }
+.qpop-g em { display: block; margin-bottom: 3px; font-style: normal; font-family: var(--px); font-size: 7px; text-transform: uppercase; color: var(--muted); }
+.qi { display: flex; align-items: center; gap: 8px; width: 100%; padding: 4px 6px; margin: 1px 0; background: transparent; border: 0; text-align: left; font-family: var(--sans); font-size: 12.5px; font-weight: 700; color: var(--navy); cursor: pointer; }
+.qi:hover, .qi:focus-visible { background: var(--pink-l); }
+.qi .ck { flex: none; width: 14px; height: 14px; display: grid; place-items: center; background: #fff; border: 2px solid var(--navy); font-style: normal; font-size: 10px; font-weight: 800; line-height: 1; }
+.qi.done .ck { background: var(--mint); }
+.qi.done span { font-weight: 500; color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(26, 36, 66, 0.45); }
+.qpop-f { margin-top: 8px; padding-top: 6px; border-top: 2px dashed rgba(26, 36, 66, 0.25); font-size: 11px; line-height: 1.4; color: var(--muted); }
+
+/* milestone toasts (25 / 50 / 75 / 100%) — one at a time, centred under the menu bar */
+.ms-wrap { position: fixed; z-index: 7000; left: 50%; top: calc(var(--menu-h) + 10px); transform: translateX(-50%); width: min(420px, calc(100vw - 24px)); display: flex; flex-direction: column; align-items: center; pointer-events: none; }
+body[data-stage="mobile"] .ms-wrap { top: 66px; }
+.ms-toast { width: 100%; background: #fff; border: 3px solid var(--navy); box-shadow: 4px 4px 0 var(--navy); opacity: 0; transform: translateY(-8px); transition: opacity 0.3s ease, transform 0.3s ease; }
+.ms-toast.in { opacity: 1; transform: none; }
+.ms-bar { display: flex; align-items: center; gap: 4px; padding: 4px 8px; background: var(--navy); color: #fff; font-family: var(--px); font-size: 7px; }
+.ms-bar i { width: 7px; height: 7px; background: var(--pink); }
+.ms-bar i + i { background: var(--butter); }
+.ms-bar span { margin-left: auto; opacity: 0.85; }
+.ms-body { display: flex; align-items: center; gap: 10px; padding: 9px 12px; }
+.ms-ico img { display: block; width: 28px; height: 28px; }
+.ms-txt { font-size: 13px; font-weight: 700; line-height: 1.35; color: var(--navy); }
 
 /* avatar */
 .avatar { position: absolute; z-index: 30; left: 50%; bottom: 62px; width: 120px; margin-left: -60px; pointer-events: none; }
@@ -649,7 +695,14 @@ input[type='range']::-moz-range-thumb { width: 14px; height: 18px; background: v
 .m-snd { font-family: var(--px); font-size: 12px; padding: 6px 9px; background: transparent; color: #fff; border: 2px solid rgba(255, 255, 255, 0.4); } .m-snd.on { color: var(--mint); border-color: var(--mint); }
 .m-stats { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
 .m-xp, .m-prog { font-family: var(--px); font-size: 7px; color: #FFD86B; white-space: nowrap; }
-.m-prog { color: #9FF0CB; }
+.m-prog { position: relative; display: grid; grid-template-columns: auto auto; justify-content: end; align-items: center; gap: 3px 5px; color: #9FF0CB; cursor: pointer; }
+.m-prog .quest-n { grid-column: 1 / -1; text-align: right; }
+.m-prog .quest-pips { gap: 1px; }
+.m-prog .quest-pips i { width: 5px; height: 8px; border: 1px solid #9FF0CB; background: transparent; }
+.m-prog .quest-pips i.f { background: #9FF0CB; }
+.m-prog .padlock { width: 10px; height: 11px; }
+.m-prog .padlock .n { fill: #fff; }
+.m-prog .lock-tip { bottom: auto; top: calc(100% + 8px); left: auto; right: -4px; transform: none; }
 .m-sec { margin: 14px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 3px solid var(--navy); box-shadow: 4px 4px 0 var(--navy); }
 .m-sec h2 { font-size: 18px; margin: 0 0 12px; font-weight: 800; }
 .m-hero p { margin: 8px 0 12px; font-size: 15px; }

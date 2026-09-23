@@ -401,33 +401,26 @@ img.px, .px { image-rendering: pixelated; image-rendering: crisp-edges; }
 .cmp-grip:focus-visible { outline: 3px dashed var(--pink-d); outline-offset: 3px; }
 .cmp-caption { margin-top: 6px; text-align: center; font-size: 12px; color: var(--muted); min-height: 1.4em; }
 
-/* About · Journey — alternating pixel timeline */
-.jwrap { position: relative; margin: 14px 0 4px; }
-.jline-track { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; margin-left: -1.5px; background: var(--lav); }
-.jline-fill { position: absolute; top: 0; left: 50%; width: 3px; margin-left: -1.5px; height: 0; background: var(--navy); transition: height 0.6s ease; }
-.jtl { position: relative; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 30px; }
-.jitem { position: relative; display: grid; grid-template-columns: 1fr 46px 1fr; align-items: start; gap: 14px; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+/* About · Journey — single-column pixel timeline (same structure at every width) */
+.jwrap { position: relative; max-width: 520px; margin: 16px auto 4px; }
+.jline-track { position: absolute; top: 4px; bottom: 4px; left: 32px; width: 3px; margin-left: -1.5px; background: var(--lav); }
+.jline-fill { position: absolute; top: 4px; left: 32px; width: 3px; margin-left: -1.5px; height: 0; background: var(--navy); transition: height 0.6s ease; }
+.jtl { position: relative; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.jitem { position: relative; display: grid; grid-template-columns: 64px 1fr; align-items: start; gap: 14px; padding: 10px 0; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .jitem.in { opacity: 1; transform: none; }
-.jitem.side-l .jcard { grid-column: 1; text-align: right; }
-.jitem.side-l .jnode { grid-column: 2; }
-.jitem.side-r .jcard { grid-column: 3; text-align: left; }
-.jitem.side-r .jnode { grid-column: 2; }
-.jnode { position: relative; z-index: 1; width: 40px; height: 40px; display: grid; place-items: center; background: #fff; border: 2px solid var(--navy); box-shadow: 2px 2px 0 var(--navy); transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+.jmark { grid-column: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; padding-top: 1px; }
+.jnode { position: relative; z-index: 1; width: 40px; height: 40px; flex: none; display: grid; place-items: center; background: #fff; border: 2px solid var(--navy); box-shadow: 2px 2px 0 var(--navy); transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
 .jnode img { width: 24px; height: 24px; display: block; }
 .jnode.on { background: var(--butter); box-shadow: 0 0 0 3px var(--pink-l), 2px 2px 0 var(--navy); transform: scale(1.08); }
-.jcard { min-width: 0; }
-.jyear { display: inline-block; font-family: var(--px); font-size: 11px; color: var(--pink-d); margin-bottom: 6px; }
-.jcard-h { display: inline-flex; align-items: center; gap: 8px; width: auto; max-width: 100%; text-align: inherit; padding: 8px 12px; background: #fff; border: 2px solid var(--navy); box-shadow: 2px 2px 0 var(--navy); transition: transform 0.15s ease, box-shadow 0.15s ease; }
-.jitem.side-r .jcard-h { flex-direction: row; }
-.jitem.side-l .jcard-h { flex-direction: row-reverse; }
+.jyear { display: block; width: 64px; font-family: var(--px); font-size: 7px; line-height: 1.4; color: var(--pink-d); text-align: center; }
+.jcard { grid-column: 2; min-width: 0; padding-top: 4px; }
+.jcard-h { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; padding: 8px 12px; background: #fff; border: 2px solid var(--navy); box-shadow: 2px 2px 0 var(--navy); transition: transform 0.15s ease, box-shadow 0.15s ease; }
 .jcard-h:hover, .jcard-h:focus-visible { transform: translateY(-2px); box-shadow: 4px 5px 0 var(--navy); }
-.jcard-h b { font-size: 14px; }
+.jcard-h b { flex: 1; font-size: 14px; }
 .jchev { font-weight: 800; font-size: 15px; flex: none; transition: transform 0.25s ease; }
 .jitem.open .jchev { transform: rotate(45deg); }
 .jteaser { margin: 8px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
 .jquote { margin: 8px 0 0; font-style: italic; font-weight: 600; font-size: 12.5px; color: var(--navy); border-left: 3px solid var(--pink); padding: 2px 0 2px 10px; }
-.jitem.side-r .jquote { border-left: 3px solid var(--pink); border-right: 0; }
-.jitem.side-l .jquote { border-left: 0; border-right: 3px solid var(--pink); padding: 2px 10px 2px 0; }
 .jbody { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease; }
 .jitem.open .jbody { max-height: 240px; opacity: 1; margin-top: 8px; }
 .jbody p { margin: 0; font-size: 13px; line-height: 1.55; background: #fff; border: 2px solid var(--navy); padding: 10px 12px; }
@@ -775,12 +768,10 @@ details.more > summary:hover { background: var(--butter); }
   .about-photo img { width: 170px; }
   .cmp-frame { width: 190px; }
   .tkit { grid-template-columns: 1fr; }
-  .jline-track, .jline-fill { left: 20px; }
-  .jitem, .jitem.side-l, .jitem.side-r { grid-template-columns: 40px 1fr; }
-  .jitem.side-l .jnode, .jitem.side-r .jnode { grid-column: 1; }
-  .jitem.side-l .jcard, .jitem.side-r .jcard { grid-column: 2; text-align: left; }
-  .jitem.side-l .jcard-h, .jitem.side-r .jcard-h { flex-direction: row; }
-  .jitem.side-l .jquote { border-left: 3px solid var(--pink); border-right: 0; padding: 2px 0 2px 10px; }
+  .jwrap { max-width: none; }
+  .jline-track, .jline-fill { left: 28px; }
+  .jitem { grid-template-columns: 56px 1fr; gap: 10px; }
+  .jmark, .jyear { width: 56px; }
   .m-card-b .expdetail { padding: 6px 8px 12px; }
   .m-card-b .doc { padding: 14px 10px 18px; }
   /* photo album: a single column on small screens, captions always visible (no hover on touch) */

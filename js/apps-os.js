@@ -102,10 +102,9 @@
         '<i class="jline-fill" id="jline-fill" aria-hidden="true"></i>' +
         '<ol class="jtl" id="about-journey">' +
           JOURNEY.map((j, i) =>
-            '<li class="jitem ' + (i % 2 === 0 ? 'side-l' : 'side-r') + '" data-i="' + i + '">' +
-              '<div class="jnode">' + NM.sprites.html(j.icon) + '</div>' +
+            '<li class="jitem" data-i="' + i + '">' +
+              '<div class="jmark"><div class="jnode">' + NM.sprites.html(j.icon) + '</div><span class="jyear">' + esc(j.year) + '</span></div>' +
               '<div class="jcard">' +
-                '<span class="jyear">' + esc(j.year) + '</span>' +
                 '<button class="jcard-h" type="button" aria-expanded="false">' +
                   '<b>' + esc(j.title) + '</b><i class="jchev" aria-hidden="true">+</i>' +
                 '</button>' +

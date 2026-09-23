@@ -16,40 +16,153 @@
     return Math.round(s / 86400) + 'd ago';
   };
 
-  /* ================= ABOUT ================= */
+  /* ================= ABOUT (tabbed, macOS "About This Mac" style) ================= */
+  const JOURNEY = [
+    {
+      year: '2020–24', title: 'BTech Computer Science',
+      teaser: 'Machine learning models and desktop applications in class — and on the side, Glitch, my college\'s game-dev club, and an international Unity game jam.',
+      full: 'I studied Computer Science at Amrita, building machine learning models and full desktop applications for coursework. Outside class I found my real classroom in Glitch, our game-development club — I competed in an International Unity Game Jam and later helped organise the same event for the next batch. It\'s where I first learned that the fastest way to understand a system is to build a small, playable version of it.',
+    },
+    {
+      year: '2024', title: 'The pivot',
+      teaser: 'Somewhere between building systems and watching people use them, my curiosity shifted — from how something works to why people choose it at all.',
+      full: 'Somewhere in my final year I noticed I was more curious about why people chose one product over another than about the architecture running underneath it. Every feature I shipped raised a question no engineering course could answer: what actually makes someone care? That question is what sent me looking for a business degree instead of a job offer.',
+    },
+    {
+      year: '2025', title: 'PGDM at WeSchool',
+      teaser: 'A PGDM in Media &amp; Entertainment at WeSchool, Mumbai — brand strategy, consumer research, and a crash course in marketing I\'d never formally studied.',
+      full: 'I joined WeSchool\'s PGDM in Media &amp; Entertainment to formally study what had been pulling at me: brand strategy, consumer research and marketing. It\'s given me frameworks for the instinct I already had, and put me in national case competitions that forced me to think fast under pressure. Two years in, it still feels like the right pivot.',
+    },
+    {
+      year: '2026', title: 'Tommy Hilfiger internship',
+      teaser: 'Two months on a premium retail floor — CRM-led clienteling, tele-outreach to loyalty members, and ₹19.25L in personal sales.',
+      full: 'For my summer internship I worked the floor at Tommy Hilfiger, Express Avenue — real customers, real targets, real pressure. I ran CRM-driven clienteling, calling loyalty members ahead of sale days, and closed ₹19.25L+ in personal sales over 52 days, hitting 108.3% of my May target. It\'s the closest I\'ve come to watching a brand strategy work in real time, one transaction at a time.',
+    },
+    {
+      year: '2025–26', title: 'Case competitions',
+      teaser: 'IMT Ghaziabad, 2nd Runner-Up. IIM Indore, National Finalist. Two different problems, the same instinct: find the constraint, then find the opportunity inside it.',
+      full: 'Case competitions became my testing ground for everything I was learning. At IMT Ghaziabad\'s Brand Alchemy, our team placed 2nd Runner-Up proposing a new backpack line for Bata; at IIM Indore\'s Prodyssey, we made the National Finals redesigning a 19-college project under COVID-era constraints. Different industries, same habit: find the constraint first, then the opportunity hiding inside it.',
+    },
+    {
+      year: 'Now', title: 'Now',
+      teaser: 'Bringing the technical side back in — building this very site, pixel by pixel, as proof the two halves were never really separate.',
+      full: 'Right now I\'m pulling the technical half of my story back into the marketing half — this portfolio is the clearest example, a pixel-art desktop I built myself rather than a template I filled in. It\'s a small argument for what I actually believe: that the best brand thinking still benefits from knowing how the system underneath it works. I\'m still looking for where that combination is most useful next.',
+    },
+  ];
+
+  function aboutOverviewHtml() {
+    return '<div class="doc">' +
+      '<div class="about-photos">' +
+        '<figure><img src="assets/nandita_photo.jpg" alt="Nandita Menon, smiling, in a navy blazer and pink collared shirt" width="84" height="112"><figcaption>the real one</figcaption></figure>' +
+        '<figure><img class="px" src="assets/nandita_pixel_avatar.png" alt="Pixel-art avatar of Nandita Menon" width="84" height="112"><figcaption>the 8-bit one</figcaption></figure>' +
+      '</div>' +
+      '<div class="kicker">About · README.md</div>' +
+      '<h2>Nandita Menon</h2>' +
+      '<p class="lead">Computer-science engineer turned media &amp; brand strategist. I bridge logic and creativity — technology and people.</p>' +
+      '<div class="chips"><span>PGDM Media &amp; Entertainment \'27</span><span>WeSchool, Mumbai</span><span>B.Tech CSE \'24</span></div>' +
+      '<p>Hyderabad\'s pace and Kerala\'s roots taught me early that the best ideas sit between two worlds. I studied Computer Science, which gave me a strong base in logical thinking — but I kept gravitating to the creative, people-facing side of technology: a game-development club, an international game jam, and an internship designing educational games for children under a government initiative.</p>' +
+      '<p>That instinct pulled me toward management. At WeSchool I\'ve kept testing it from different angles: selling and doing CRM on a premium retail floor, researching how transparency builds (or breaks) trust in AI, and mapping AI in content creation for a media client — alongside national case competitions that taught me to think on my feet.</p>' +
+      '<h3>System upgrade log</h3>' +
+      '<ol class="upgrades">' +
+        '<li><b>2020</b><span>v1.0 · Blockchain &amp; Web3 intern at Verzeo — first decentralised-app concepts</span></li>' +
+        '<li><b>2021</b><span>v1.1 · C# Unity game developer; co-built the Instructor Aid System</span></li>' +
+        '<li><b>2022</b><span>v1.2 · Game Design &amp; UX intern at Ammachi Labs (DIKSHA initiative, Figma)</span></li>' +
+        '<li><b>2023</b><span>v1.3 · Black Fungus Detection: 5 architectures compared, Inception V3 best at 98.87% train / 98.25% test</span></li>' +
+        '<li><b>2024</b><span>v1.9 · B.Tech Computer Science &amp; Engineering, Amrita — logic engine installed</span></li>' +
+        '<li><b>2025</b><span>v2.0 · <em>Major upgrade:</em> PGDM Media &amp; Entertainment, WeSchool</span></li>' +
+        '<li><b>2026</b><span>v2.1 · Patches: Tommy Hilfiger SIP, SIRP on explainable AI, GCL with Digital Dogs</span></li>' +
+      '</ol>' +
+      '<div class="cols2">' +
+        '<div><h3>Skills</h3><div class="chips"><span>Digital marketing</span><span>AI &amp; analytics</span><span>Python</span><span>Machine learning</span><span>Excel</span><span>Power BI</span><span>MySQL</span><span>HTML/CSS/JS</span><span>Game design</span></div>' +
+        '<h3>Languages</h3><div class="chips"><span>English</span><span>Hindi</span><span>Malayalam</span><span>Telugu</span><span>Tamil</span></div></div>' +
+        '<div><h3>Certifications</h3><ul class="plain"><li>Google Ads — Search, Display, Video</li><li>KPMG India — Sustainability (16 hrs)</li><li>Johns Hopkins — HTML, CSS &amp; JS (2020)</li><li>UC — C for Everyone (2023)</li><li>Udemy — C# Unity Game Developer (2021)</li><li>Udemy — Web Developer Bootcamp (2025)</li></ul></div>' +
+      '</div>' +
+      '<h3>Also</h3><ul class="plain"><li>Senior Committee Member, Guruvandana — WeSchool\'s industry-mentor engagement initiative</li><li>SIP 2026 volunteer — on-ground operations for new-student registration</li></ul>' +
+    '</div>';
+  }
+
+  function aboutJourneyHtml() {
+    return '<div class="doc">' +
+      '<div class="kicker">About · Journey</div>' +
+      '<h2>How I got here</h2>' +
+      '<p class="lead">Click a row to read more.</p>' +
+      '<ol class="jline" id="about-journey">' +
+        JOURNEY.map((j, i) =>
+          '<li class="jrow" data-i="' + i + '">' +
+            '<button class="jhead" type="button" aria-expanded="false">' +
+              '<span class="jyear">' + esc(j.year) + '</span>' +
+              '<span class="jmain"><b>' + esc(j.title) + '</b><em>' + j.teaser + '</em></span>' +
+              '<i class="jchev" aria-hidden="true">+</i>' +
+            '</button>' +
+            '<div class="jbody"><p>' + j.full + '</p></div>' +
+          '</li>'
+        ).join('') +
+      '</ol>' +
+    '</div>';
+  }
+
+  function aboutToolkitHtml() {
+    const group = (icon, name, skills, note) =>
+      '<div class="tkit-group"><div class="tkit-h">' + NM.sprites.html(icon) + '<b>' + name + '</b></div>' +
+      '<div class="chips">' + skills.map((s) => '<span>' + s + '</span>').join('') + '</div>' +
+      '<p class="tkit-note">' + note + '</p></div>';
+    return '<div class="doc">' +
+      '<div class="kicker">About · Toolkit</div>' +
+      '<h2>What I actually use</h2>' +
+      '<div class="tkit">' +
+        group('monitor', 'Technical', ['Python', 'Machine learning', 'MySQL', 'HTML/CSS/JS'], 'I use these to build things myself — this site\'s pixel engine, the Black Fungus models, quick data pulls when a hunch needs numbers behind it.') +
+        group('chat', 'Marketing', ['Digital marketing', 'AI &amp; analytics', 'Power BI', 'Excel'], 'Where strategy meets execution — sizing a market, reading a dashboard, and turning both into a plan a retail floor can actually run.') +
+        group('gamepad', 'Creative', ['Game design'], 'The instinct that started it all: prototyping fast, testing with real people, and not being precious about the first draft.') +
+      '</div>' +
+    '</div>';
+  }
+
+  function aboutCurrentlyHtml() {
+    return '<div class="doc">' +
+      '<div class="kicker">About · Currently</div>' +
+      '<h2>Right now</h2>' +
+      '<p>I\'m deep in a stretch of learning by doing — most of what\'s in this portfolio (the pixel art, the tiny animations, the AI assistant) I picked up while building it, one stubborn bug at a time. Outside of that, I\'m still chasing the thread from my SIRP research: how AI can be personal without being invasive, and what that means for brands I might someday work with.</p>' +
+      '<p>I\'m almost always reading something that explains how people decide things, and almost always listening to something in the background — music is a constant, not a mood. On weekends you\'ll usually find me café hopping somewhere new in the city; I like judging a place by its coffee and its playlist in equal measure.</p>' +
+      '<p>And if you ask me to choose between cats and dogs, I won\'t. I love both, equally and without apology — anyone who makes me pick clearly hasn\'t met enough of either.</p>' +
+    '</div>';
+  }
+
   defs.about = {
     title: 'About Nandita — README.md', sprite: 'about', w: 720, h: 620,
     content(root) {
-      root.innerHTML =
-        '<div class="doc">' +
-          '<div class="about-top">' +
-            '<figure class="about-photo"><img src="assets/nandita_photo.jpg" alt="Nandita Menon, smiling, in a navy blazer and pink collared shirt" width="200" height="267"></figure>' +
-            '<div class="about-intro">' +
-              '<div class="kicker">About · README.md</div>' +
-              '<h2>Nandita Menon</h2>' +
-              '<p class="lead">Computer-science engineer turned media &amp; brand strategist. I bridge logic and creativity — technology and people.</p>' +
-              '<div class="chips"><span>PGDM Media &amp; Entertainment \'27</span><span>WeSchool, Mumbai</span><span>B.Tech CSE \'24</span></div>' +
-            '</div>' +
-          '</div>' +
-          '<p>Hyderabad\'s pace and Kerala\'s roots taught me early that the best ideas sit between two worlds. I studied Computer Science, which gave me a strong base in logical thinking — but I kept gravitating to the creative, people-facing side of technology: a game-development club, an international game jam, and an internship designing educational games for children under a government initiative.</p>' +
-          '<p>That instinct pulled me toward management. At WeSchool I\'ve kept testing it from different angles: selling and doing CRM on a premium retail floor, researching how transparency builds (or breaks) trust in AI, and mapping AI in content creation for a media client — alongside national case competitions that taught me to think on my feet.</p>' +
-          '<h3>System upgrade log</h3>' +
-          '<ol class="upgrades">' +
-            '<li><b>2020</b><span>v1.0 · Blockchain &amp; Web3 intern at Verzeo — first decentralised-app concepts</span></li>' +
-            '<li><b>2021</b><span>v1.1 · C# Unity game developer; co-built the Instructor Aid System</span></li>' +
-            '<li><b>2022</b><span>v1.2 · Game Design &amp; UX intern at Ammachi Labs (DIKSHA initiative, Figma)</span></li>' +
-            '<li><b>2023</b><span>v1.3 · Black Fungus Detection: 5 architectures compared, Inception V3 best at 98.87% train / 98.25% test</span></li>' +
-            '<li><b>2024</b><span>v1.9 · B.Tech Computer Science &amp; Engineering, Amrita — logic engine installed</span></li>' +
-            '<li><b>2025</b><span>v2.0 · <em>Major upgrade:</em> PGDM Media &amp; Entertainment, WeSchool</span></li>' +
-            '<li><b>2026</b><span>v2.1 · Patches: Tommy Hilfiger SIP, SIRP on explainable AI, GCL with Digital Dogs</span></li>' +
-          '</ol>' +
-          '<div class="cols2">' +
-            '<div><h3>Skills</h3><div class="chips"><span>Digital marketing</span><span>AI &amp; analytics</span><span>Python</span><span>Machine learning</span><span>Excel</span><span>Power BI</span><span>MySQL</span><span>HTML/CSS/JS</span><span>Game design</span></div>' +
-            '<h3>Languages</h3><div class="chips"><span>English</span><span>Hindi</span><span>Malayalam</span><span>Telugu</span><span>Tamil</span></div></div>' +
-            '<div><h3>Certifications</h3><ul class="plain"><li>Google Ads — Search, Display, Video</li><li>KPMG India — Sustainability (16 hrs)</li><li>Johns Hopkins — HTML, CSS &amp; JS (2020)</li><li>UC — C for Everyone (2023)</li><li>Udemy — C# Unity Game Developer (2021)</li><li>Udemy — Web Developer Bootcamp (2025)</li></ul></div>' +
-          '</div>' +
-          '<h3>Also</h3><ul class="plain"><li>Senior Committee Member, Guruvandana — WeSchool\'s industry-mentor engagement initiative</li><li>SIP 2026 volunteer — on-ground operations for new-student registration</li></ul>' +
-        '</div>';
+      NM.apps.helpers.tabs(root, [
+        { id: 'overview', label: 'Overview', html: aboutOverviewHtml() },
+        {
+          id: 'journey', label: 'Journey', html: aboutJourneyHtml(),
+          build(panel) {
+            const rows = $$('.jrow', panel);
+            rows.forEach((row) => {
+              const head = $('.jhead', row);
+              head.addEventListener('click', () => {
+                const open = row.classList.toggle('open');
+                head.setAttribute('aria-expanded', open);
+                NM.sfx.play('click');
+              });
+            });
+            if ('IntersectionObserver' in window) {
+              const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                  if (!entry.isIntersecting) return;
+                  const row = entry.target;
+                  const i = Number(row.dataset.i) || 0;
+                  setTimeout(() => row.classList.add('in'), i * 90);
+                  io.unobserve(row);
+                });
+              }, { threshold: 0.15 });
+              rows.forEach((row) => io.observe(row));
+            } else {
+              rows.forEach((row) => row.classList.add('in'));
+            }
+          },
+        },
+        { id: 'toolkit', label: 'Toolkit', html: aboutToolkitHtml() },
+        { id: 'currently', label: 'Currently', html: aboutCurrentlyHtml() },
+      ]);
     },
   };
 

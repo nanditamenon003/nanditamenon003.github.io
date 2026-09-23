@@ -16,44 +16,14 @@
     return Math.round(s / 86400) + 'd ago';
   };
 
-  // Bio typewriter — plays once per page session, on the About window's first open only
-  let aboutBioTyped = false;
-  function typeInto(el, text, speed) {
-    return new Promise((resolve) => {
-      let i = 0;
-      const cursor = document.createElement('span');
-      cursor.className = 'type-cursor';
-      el.appendChild(cursor);
-      (function step() {
-        if (i < text.length) {
-          cursor.insertAdjacentText('beforebegin', text.charAt(i));
-          i++;
-          setTimeout(step, speed);
-        } else {
-          setTimeout(() => { cursor.remove(); resolve(); }, 500);
-        }
-      })();
-    });
-  }
-
   /* ================= ABOUT ================= */
-  const ABOUT_BIO1 = "Hyderabad's pace and Kerala's roots taught me early that the best ideas sit between two worlds. I studied Computer Science, which gave me a strong base in logical thinking — but I kept gravitating to the creative, people-facing side of technology: a game-development club, an international game jam, and an internship designing educational games for children under a government initiative.";
-  const ABOUT_BIO2 = "That instinct pulled me toward management. At WeSchool I've kept testing it from different angles: selling and doing CRM on a premium retail floor, researching how transparency builds (or breaks) trust in AI, and mapping AI in content creation for a media client — alongside national case competitions that taught me to think on my feet.";
-
   defs.about = {
     title: 'About Nandita — README.md', sprite: 'about', w: 720, h: 620,
     content(root) {
-      const skillRow = (name, pct) => '<div class="skrow"><span>' + name + '</span><span class="skbar"><span class="skfill" data-w="' + pct + '"></span></span></div>';
       root.innerHTML =
         '<div class="doc">' +
           '<div class="about-top">' +
-            '<figure class="about-photo">' +
-              '<div class="photo-toggle" id="about-toggle" tabindex="0" role="button" aria-label="Compare the real photo and the pixel avatar">' +
-                '<img class="ph-real" src="assets/nandita_photo.jpg" alt="Nandita Menon, smiling, in a navy blazer and pink collared shirt" width="200" height="267">' +
-                '<img class="ph-pixel px" src="assets/nandita_pixel_avatar.png" alt="Pixel-art avatar of Nandita Menon" width="200" height="267">' +
-              '</div>' +
-              '<div class="photo-label" id="about-photo-label" aria-live="polite">the real one</div>' +
-            '</figure>' +
+            '<figure class="about-photo"><img src="assets/nandita_photo.jpg" alt="Nandita Menon, smiling, in a navy blazer and pink collared shirt" width="200" height="267"></figure>' +
             '<div class="about-intro">' +
               '<div class="kicker">About · README.md</div>' +
               '<h2>Nandita Menon</h2>' +
@@ -61,13 +31,8 @@
               '<div class="chips"><span>PGDM Media &amp; Entertainment \'27</span><span>WeSchool, Mumbai</span><span>B.Tech CSE \'24</span></div>' +
             '</div>' +
           '</div>' +
-          '<div class="tiles stats4">' +
-            '<div class="tile big"><span class="stat-ico">' + NM.sprites.html('gear') + '</span><b>CS Engineer → Brand Strategist</b></div>' +
-            '<div class="tile"><span class="stat-ico">' + NM.sprites.html('trophy') + '</span><b>2</b><span>case comp wins</span></div>' +
-            '<div class="tile"><span class="stat-ico">' + NM.sprites.html('star') + '</span><b>₹19.25L</b><span>sales closed</span></div>' +
-            '<div class="tile"><span class="stat-ico">' + NM.sprites.html('pdf') + '</span><b>39</b><span>papers reviewed</span></div>' +
-          '</div>' +
-          '<div class="bio-type"><p id="bio-p1"></p><p id="bio-p2"></p></div>' +
+          '<p>Hyderabad\'s pace and Kerala\'s roots taught me early that the best ideas sit between two worlds. I studied Computer Science, which gave me a strong base in logical thinking — but I kept gravitating to the creative, people-facing side of technology: a game-development club, an international game jam, and an internship designing educational games for children under a government initiative.</p>' +
+          '<p>That instinct pulled me toward management. At WeSchool I\'ve kept testing it from different angles: selling and doing CRM on a premium retail floor, researching how transparency builds (or breaks) trust in AI, and mapping AI in content creation for a media client — alongside national case competitions that taught me to think on my feet.</p>' +
           '<h3>System upgrade log</h3>' +
           '<ol class="upgrades">' +
             '<li><b>2020</b><span>v1.0 · Blockchain &amp; Web3 intern at Verzeo — first decentralised-app concepts</span></li>' +
@@ -79,41 +44,12 @@
             '<li><b>2026</b><span>v2.1 · Patches: Tommy Hilfiger SIP, SIRP on explainable AI, GCL with Digital Dogs</span></li>' +
           '</ol>' +
           '<div class="cols2">' +
-            '<div><h3>Skills</h3><div class="skilltree" id="about-skills">' +
-              '<div class="skbranch"><i class="skbranch-t">Technical</i>' + skillRow('Python', 82) + skillRow('Machine learning', 75) + skillRow('MySQL', 68) + skillRow('HTML/CSS/JS', 78) + '</div>' +
-              '<div class="skbranch"><i class="skbranch-t">Marketing</i>' + skillRow('Digital marketing', 88) + skillRow('AI &amp; analytics', 80) + skillRow('Power BI', 76) + skillRow('Excel', 85) + '</div>' +
-              '<div class="skbranch"><i class="skbranch-t">Creative</i>' + skillRow('Game design', 65) + '</div>' +
-            '</div>' +
+            '<div><h3>Skills</h3><div class="chips"><span>Digital marketing</span><span>AI &amp; analytics</span><span>Python</span><span>Machine learning</span><span>Excel</span><span>Power BI</span><span>MySQL</span><span>HTML/CSS/JS</span><span>Game design</span></div>' +
             '<h3>Languages</h3><div class="chips"><span>English</span><span>Hindi</span><span>Malayalam</span><span>Telugu</span><span>Tamil</span></div></div>' +
             '<div><h3>Certifications</h3><ul class="plain"><li>Google Ads — Search, Display, Video</li><li>KPMG India — Sustainability (16 hrs)</li><li>Johns Hopkins — HTML, CSS &amp; JS (2020)</li><li>UC — C for Everyone (2023)</li><li>Udemy — C# Unity Game Developer (2021)</li><li>Udemy — Web Developer Bootcamp (2025)</li></ul></div>' +
           '</div>' +
           '<h3>Also</h3><ul class="plain"><li>Senior Committee Member, Guruvandana — WeSchool\'s industry-mentor engagement initiative</li><li>SIP 2026 volunteer — on-ground operations for new-student registration</li></ul>' +
         '</div>';
-
-      const toggle = $('#about-toggle', root), label = $('#about-photo-label', root);
-      const setPhoto = (on) => { toggle.classList.toggle('flipped', on); label.textContent = on ? 'the 8-bit one' : 'the real one'; };
-      if (matchMedia('(hover: hover)').matches) {
-        toggle.addEventListener('mouseenter', () => setPhoto(true));
-        toggle.addEventListener('mouseleave', () => setPhoto(false));
-        toggle.addEventListener('focus', () => setPhoto(true));
-        toggle.addEventListener('blur', () => setPhoto(false));
-      } else {
-        toggle.addEventListener('click', () => setPhoto(!toggle.classList.contains('flipped')));
-      }
-      toggle.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPhoto(!toggle.classList.contains('flipped')); } });
-
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        $$('.skfill', root).forEach((el) => { el.style.width = el.dataset.w + '%'; });
-      }));
-
-      const p1 = $('#bio-p1', root), p2 = $('#bio-p2', root);
-      if (aboutBioTyped) {
-        p1.textContent = ABOUT_BIO1;
-        p2.textContent = ABOUT_BIO2;
-      } else {
-        aboutBioTyped = true;
-        (async () => { await typeInto(p1, ABOUT_BIO1, 12); await typeInto(p2, ABOUT_BIO2, 12); })();
-      }
     },
   };
 

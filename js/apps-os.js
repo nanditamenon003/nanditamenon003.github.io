@@ -19,42 +19,53 @@
   /* ================= ABOUT (tabbed, macOS "About This Mac" style) ================= */
   const JOURNEY = [
     {
-      year: '2020–24', title: 'BTech Computer Science',
+      year: '2020–24', title: 'BTech Computer Science', icon: 'terminal',
       teaser: 'Machine learning models and desktop applications in class — and on the side, Glitch, my college\'s game-dev club, and an international Unity game jam.',
+      quote: 'Build small, playable things — that\'s still how I learn fastest.',
       full: 'I studied Computer Science at Amrita, building machine learning models and full desktop applications for coursework. Outside class I found my real classroom in Glitch, our game-development club — I competed in an International Unity Game Jam and later helped organise the same event for the next batch. It\'s where I first learned that the fastest way to understand a system is to build a small, playable version of it.',
     },
     {
-      year: '2024', title: 'The pivot',
+      year: '2024', title: 'The pivot', icon: 'star',
       teaser: 'Somewhere between building systems and watching people use them, my curiosity shifted — from how something works to why people choose it at all.',
+      quote: 'The interesting question was never how — it was why.',
       full: 'Somewhere in my final year I noticed I was more curious about why people chose one product over another than about the architecture running underneath it. Every feature I shipped raised a question no engineering course could answer: what actually makes someone care? That question is what sent me looking for a business degree instead of a job offer.',
     },
     {
-      year: '2025', title: 'PGDM at WeSchool',
+      year: '2025', title: 'PGDM at WeSchool', icon: 'gradebook',
       teaser: 'A PGDM in Media &amp; Entertainment at WeSchool, Mumbai — brand strategy, consumer research, and a crash course in marketing I\'d never formally studied.',
+      quote: 'Turns out marketing was the framework I didn\'t know I was missing.',
       full: 'I joined WeSchool\'s PGDM in Media &amp; Entertainment to formally study what had been pulling at me: brand strategy, consumer research and marketing. It\'s given me frameworks for the instinct I already had, and put me in national case competitions that forced me to think fast under pressure. Two years in, it still feels like the right pivot.',
     },
     {
-      year: '2026', title: 'Tommy Hilfiger internship',
+      year: '2026', title: 'Tommy Hilfiger internship', icon: 'sneaker',
       teaser: 'Two months on a premium retail floor — CRM-led clienteling, tele-outreach to loyalty members, and ₹19.25L in personal sales.',
+      quote: '₹19.25L later, strategy stopped being theoretical.',
       full: 'For my summer internship I worked the floor at Tommy Hilfiger, Express Avenue — real customers, real targets, real pressure. I ran CRM-driven clienteling, calling loyalty members ahead of sale days, and closed ₹19.25L+ in personal sales over 52 days, hitting 108.3% of my May target. It\'s the closest I\'ve come to watching a brand strategy work in real time, one transaction at a time.',
     },
     {
-      year: '2025–26', title: 'Case competitions',
+      year: '2025–26', title: 'Case competitions', icon: 'trophy',
       teaser: 'IMT Ghaziabad, 2nd Runner-Up. IIM Indore, National Finalist. Two different problems, the same instinct: find the constraint, then find the opportunity inside it.',
+      quote: 'Find the constraint first — the opportunity is always hiding inside it.',
       full: 'Case competitions became my testing ground for everything I was learning. At IMT Ghaziabad\'s Brand Alchemy, our team placed 2nd Runner-Up proposing a new backpack line for Bata; at IIM Indore\'s Prodyssey, we made the National Finals redesigning a 19-college project under COVID-era constraints. Different industries, same habit: find the constraint first, then the opportunity hiding inside it.',
     },
     {
-      year: 'Now', title: 'Now',
+      year: 'Now', title: 'Now', icon: 'monitor',
       teaser: 'Bringing the technical side back in — building this very site, pixel by pixel, as proof the two halves were never really separate.',
+      quote: 'The two halves were never really separate.',
       full: 'Right now I\'m pulling the technical half of my story back into the marketing half — this portfolio is the clearest example, a pixel-art desktop I built myself rather than a template I filled in. It\'s a small argument for what I actually believe: that the best brand thinking still benefits from knowing how the system underneath it works. I\'m still looking for where that combination is most useful next.',
     },
   ];
 
   function aboutOverviewHtml() {
     return '<div class="doc">' +
-      '<div class="about-photos">' +
-        '<figure><img src="assets/nandita_photo.jpg" alt="Nandita Menon, smiling, in a navy blazer and pink collared shirt" width="84" height="112"><figcaption>the real one</figcaption></figure>' +
-        '<figure><img class="px" src="assets/nandita_pixel_avatar.png" alt="Pixel-art avatar of Nandita Menon" width="84" height="112"><figcaption>the 8-bit one</figcaption></figure>' +
+      '<div class="cmpslide">' +
+        '<div class="cmp-frame" id="cmp-frame">' +
+          '<img class="cmp-real" src="assets/nandita_photo.jpg" alt="Nandita Menon, smiling, in a navy blazer and pink collared shirt" width="240" height="320">' +
+          '<div class="cmp-pixel-wrap" id="cmp-wrap"><img class="cmp-pixel px" src="assets/nandita_pixel_photo.jpg" alt="Pixel-art version of the same photo" width="240" height="320"></div>' +
+          '<i class="cmp-line" id="cmp-line" aria-hidden="true"></i>' +
+          '<button type="button" class="cmp-grip" id="cmp-grip" role="slider" aria-label="Drag to compare the real photo and the pixel version" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span aria-hidden="true">◂▸</span></button>' +
+        '</div>' +
+        '<div class="cmp-caption" id="cmp-caption">drag to switch between me and my 8-bit self</div>' +
       '</div>' +
       '<div class="kicker">About · README.md</div>' +
       '<h2>Nandita Menon</h2>' +
@@ -85,20 +96,114 @@
     return '<div class="doc">' +
       '<div class="kicker">About · Journey</div>' +
       '<h2>How I got here</h2>' +
-      '<p class="lead">Click a row to read more.</p>' +
-      '<ol class="jline" id="about-journey">' +
-        JOURNEY.map((j, i) =>
-          '<li class="jrow" data-i="' + i + '">' +
-            '<button class="jhead" type="button" aria-expanded="false">' +
-              '<span class="jyear">' + esc(j.year) + '</span>' +
-              '<span class="jmain"><b>' + esc(j.title) + '</b><em>' + j.teaser + '</em></span>' +
-              '<i class="jchev" aria-hidden="true">+</i>' +
-            '</button>' +
-            '<div class="jbody"><p>' + j.full + '</p></div>' +
-          '</li>'
-        ).join('') +
-      '</ol>' +
+      '<p class="lead">Click a card to read more.</p>' +
+      '<div class="jwrap">' +
+        '<i class="jline-track" aria-hidden="true"></i>' +
+        '<i class="jline-fill" id="jline-fill" aria-hidden="true"></i>' +
+        '<ol class="jtl" id="about-journey">' +
+          JOURNEY.map((j, i) =>
+            '<li class="jitem ' + (i % 2 === 0 ? 'side-l' : 'side-r') + '" data-i="' + i + '">' +
+              '<div class="jnode">' + NM.sprites.html(j.icon) + '</div>' +
+              '<div class="jcard">' +
+                '<span class="jyear">' + esc(j.year) + '</span>' +
+                '<button class="jcard-h" type="button" aria-expanded="false">' +
+                  '<b>' + esc(j.title) + '</b><i class="jchev" aria-hidden="true">+</i>' +
+                '</button>' +
+                '<p class="jteaser">' + j.teaser + '</p>' +
+                '<p class="jquote">' + esc(j.quote) + '</p>' +
+                '<div class="jbody"><p>' + j.full + '</p></div>' +
+              '</div>' +
+            '</li>'
+          ).join('') +
+        '</ol>' +
+      '</div>' +
     '</div>';
+  }
+
+  function wireAboutCompare(panel) {
+    const frame = $('#cmp-frame', panel), wrap = $('#cmp-wrap', panel), line = $('#cmp-line', panel);
+    const grip = $('#cmp-grip', panel), caption = $('#cmp-caption', panel);
+    function setSplit(pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      wrap.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
+      line.style.left = pct + '%';
+      grip.style.left = pct + '%';
+      grip.setAttribute('aria-valuenow', String(Math.round(pct)));
+      caption.textContent = pct >= 80 ? 'almost all me' : pct <= 20 ? 'almost all 8-bit me' : 'drag to switch between me and my 8-bit self';
+    }
+    function pctFromEvent(e) {
+      const r = frame.getBoundingClientRect();
+      return ((e.clientX - r.left) / r.width) * 100;
+    }
+    let dragging = false;
+    frame.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      setSplit(pctFromEvent(e));
+      try { frame.setPointerCapture(e.pointerId); } catch (err) { /* unsupported */ }
+    });
+    frame.addEventListener('pointermove', (e) => { if (dragging) { setSplit(pctFromEvent(e)); e.preventDefault(); } });
+    const stop = () => { dragging = false; };
+    frame.addEventListener('pointerup', stop);
+    frame.addEventListener('pointercancel', stop);
+    grip.addEventListener('keydown', (e) => {
+      const cur = Number(grip.getAttribute('aria-valuenow')) || 50;
+      if (e.key === 'ArrowLeft') { setSplit(cur - 5); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { setSplit(cur + 5); e.preventDefault(); }
+      else if (e.key === 'Home') { setSplit(0); e.preventDefault(); }
+      else if (e.key === 'End') { setSplit(100); e.preventDefault(); }
+    });
+    setSplit(50);
+  }
+
+  function wireAboutJourney(panel) {
+    const wrap = $('.jwrap', panel), fill = $('#jline-fill', panel);
+    const items = $$('.jitem', panel);
+    items.forEach((item) => {
+      const head = $('.jcard-h', item), node = $('.jnode', item);
+      head.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        head.setAttribute('aria-expanded', open);
+        node.classList.toggle('on', open);
+        NM.sfx.play('click');
+      });
+    });
+    // node Y relative to .jwrap (the line's own positioning context) — offsetTop alone
+    // would be relative to each item's own positioned ancestor, not the shared wrap
+    function nodeY(item) {
+      const r = item.querySelector('.jnode').getBoundingClientRect();
+      const wr = wrap.getBoundingClientRect();
+      return (r.top - wr.top) + r.height / 2;
+    }
+    function reveal(item) {
+      if (item.classList.contains('in')) return;
+      item.classList.add('in');
+      const y = nodeY(item);
+      const cur = parseFloat(fill.style.height) || 0;
+      if (y > cur) fill.style.height = y + 'px';
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const item = entry.target;
+          const i = Number(item.dataset.i) || 0;
+          setTimeout(() => reveal(item), i * 90);
+          io.unobserve(item);
+        });
+      }, { threshold: 0.2 });
+      items.forEach((item) => io.observe(item));
+      // safety net: an instant/very fast scroll (e.g. a jump to the bottom) can skip an
+      // element's visible frame entirely, so IntersectionObserver never fires for it —
+      // catch that on scroll by revealing anything already above the visible viewport edge
+      const host = $('.win-body') || window;
+      const onScroll = () => {
+        const hostRect = host === window ? { bottom: window.innerHeight } : host.getBoundingClientRect();
+        items.forEach((item) => { if (!item.classList.contains('in') && item.getBoundingClientRect().top < hostRect.bottom) reveal(item); });
+      };
+      host.addEventListener('scroll', onScroll, { passive: true });
+    } else {
+      items.forEach(reveal);
+    }
   }
 
   function aboutToolkitHtml() {
@@ -131,35 +236,8 @@
     title: 'About Nandita — README.md', sprite: 'about', w: 720, h: 620,
     content(root) {
       NM.apps.helpers.tabs(root, [
-        { id: 'overview', label: 'Overview', html: aboutOverviewHtml() },
-        {
-          id: 'journey', label: 'Journey', html: aboutJourneyHtml(),
-          build(panel) {
-            const rows = $$('.jrow', panel);
-            rows.forEach((row) => {
-              const head = $('.jhead', row);
-              head.addEventListener('click', () => {
-                const open = row.classList.toggle('open');
-                head.setAttribute('aria-expanded', open);
-                NM.sfx.play('click');
-              });
-            });
-            if ('IntersectionObserver' in window) {
-              const io = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                  if (!entry.isIntersecting) return;
-                  const row = entry.target;
-                  const i = Number(row.dataset.i) || 0;
-                  setTimeout(() => row.classList.add('in'), i * 90);
-                  io.unobserve(row);
-                });
-              }, { threshold: 0.15 });
-              rows.forEach((row) => io.observe(row));
-            } else {
-              rows.forEach((row) => row.classList.add('in'));
-            }
-          },
-        },
+        { id: 'overview', label: 'Overview', html: aboutOverviewHtml(), build: wireAboutCompare },
+        { id: 'journey', label: 'Journey', html: aboutJourneyHtml(), build: wireAboutJourney },
         { id: 'toolkit', label: 'Toolkit', html: aboutToolkitHtml() },
         { id: 'currently', label: 'Currently', html: aboutCurrentlyHtml() },
       ]);

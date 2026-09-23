@@ -389,30 +389,48 @@ img.px, .px { image-rendering: pixelated; image-rendering: crisp-edges; }
 .about-photo { margin: 0; flex: none; }
 .about-photo img { display: block; width: 200px; height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: center 14%; border: 3px solid var(--navy); box-shadow: 4px 4px 0 var(--pink); }
 
-/* About · Overview — small side-by-side photo pair */
-.about-photos { display: flex; gap: 14px; margin-bottom: 16px; }
-.about-photos figure { margin: 0; text-align: center; }
-.about-photos img { display: block; width: 84px; height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: center 14%; border: 3px solid var(--navy); box-shadow: 3px 3px 0 var(--pink); transition: opacity 0.35s ease, transform 0.35s ease; }
-.about-photos figcaption { margin-top: 5px; font-family: var(--px); font-size: 6.5px; color: var(--pink-d); }
-.about-photos:hover figure:not(:hover) img { opacity: 0.5; }
-.about-photos figure:hover img { transform: scale(1.06); }
+/* About · Overview — drag-to-compare photo slider */
+.cmpslide { width: fit-content; margin-bottom: 16px; }
+.cmp-frame { position: relative; width: 240px; aspect-ratio: 3 / 4; overflow: hidden; border: 3px solid var(--navy); box-shadow: 4px 4px 0 var(--pink); touch-action: none; cursor: ew-resize; user-select: none; }
+.cmp-real, .cmp-pixel { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.cmp-real { object-position: center 14%; }
+.cmp-pixel-wrap { position: absolute; inset: 0; clip-path: inset(0 0 0 50%); }
+.cmp-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; margin-left: -1.5px; background: var(--navy); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6); pointer-events: none; }
+.cmp-grip { position: absolute; top: 50%; left: 50%; width: 28px; height: 28px; margin: -14px 0 0 -14px; display: grid; place-items: center; background: #fff; border: 2px solid var(--navy); box-shadow: 2px 2px 0 var(--navy); font-family: var(--px); font-size: 9px; padding: 0; cursor: ew-resize; }
+.cmp-grip:active { transform: scale(0.94); }
+.cmp-grip:focus-visible { outline: 3px dashed var(--pink-d); outline-offset: 3px; }
+.cmp-caption { margin-top: 6px; text-align: center; font-size: 12px; color: var(--muted); min-height: 1.4em; }
 
-/* About · Journey — clickable vertical timeline */
-.jline { list-style: none; margin: 10px 0 4px 6px; padding: 0 0 0 18px; border-left: 4px solid var(--navy); }
-.jrow { position: relative; margin: 14px 0; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
-.jrow.in { opacity: 1; transform: none; }
-.jrow::before { content: ''; position: absolute; left: -26px; top: 12px; width: 12px; height: 12px; background: var(--pink); border: 2px solid var(--navy); }
-.jhead { display: grid; grid-template-columns: 62px 1fr 18px; gap: 10px; align-items: center; width: 100%; text-align: left; padding: 10px 12px; background: #fff; border: 2px solid var(--navy); box-shadow: 2px 2px 0 var(--navy); transition: transform 0.15s ease, box-shadow 0.15s ease; }
-.jhead:hover, .jhead:focus-visible { transform: translateY(-2px); box-shadow: 4px 5px 0 var(--navy); }
-.jyear { font-family: var(--px); font-size: 7px; color: var(--pink-d); line-height: 1.4; }
-.jmain { min-width: 0; }
-.jmain b { display: block; font-size: 14px; }
-.jmain em { font-style: normal; font-size: 12.5px; color: var(--muted); line-height: 1.4; display: block; }
-.jchev { font-weight: 800; font-size: 16px; transition: transform 0.25s ease; }
-.jrow.open .jchev { transform: rotate(45deg); }
-.jbody { max-height: 0; overflow: hidden; opacity: 0; background: #fff; border-left: 2px solid var(--navy); border-right: 2px solid var(--navy); transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease; }
-.jrow.open .jbody { max-height: 240px; opacity: 1; padding: 12px 14px 14px; border-bottom: 2px solid var(--navy); }
-.jbody p { margin: 0; font-size: 13.5px; line-height: 1.55; }
+/* About · Journey — alternating pixel timeline */
+.jwrap { position: relative; margin: 14px 0 4px; }
+.jline-track { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; margin-left: -1.5px; background: var(--lav); }
+.jline-fill { position: absolute; top: 0; left: 50%; width: 3px; margin-left: -1.5px; height: 0; background: var(--navy); transition: height 0.6s ease; }
+.jtl { position: relative; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 30px; }
+.jitem { position: relative; display: grid; grid-template-columns: 1fr 46px 1fr; align-items: start; gap: 14px; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.jitem.in { opacity: 1; transform: none; }
+.jitem.side-l .jcard { grid-column: 1; text-align: right; }
+.jitem.side-l .jnode { grid-column: 2; }
+.jitem.side-r .jcard { grid-column: 3; text-align: left; }
+.jitem.side-r .jnode { grid-column: 2; }
+.jnode { position: relative; z-index: 1; width: 40px; height: 40px; display: grid; place-items: center; background: #fff; border: 2px solid var(--navy); box-shadow: 2px 2px 0 var(--navy); transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+.jnode img { width: 24px; height: 24px; display: block; }
+.jnode.on { background: var(--butter); box-shadow: 0 0 0 3px var(--pink-l), 2px 2px 0 var(--navy); transform: scale(1.08); }
+.jcard { min-width: 0; }
+.jyear { display: inline-block; font-family: var(--px); font-size: 11px; color: var(--pink-d); margin-bottom: 6px; }
+.jcard-h { display: inline-flex; align-items: center; gap: 8px; width: auto; max-width: 100%; text-align: inherit; padding: 8px 12px; background: #fff; border: 2px solid var(--navy); box-shadow: 2px 2px 0 var(--navy); transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.jitem.side-r .jcard-h { flex-direction: row; }
+.jitem.side-l .jcard-h { flex-direction: row-reverse; }
+.jcard-h:hover, .jcard-h:focus-visible { transform: translateY(-2px); box-shadow: 4px 5px 0 var(--navy); }
+.jcard-h b { font-size: 14px; }
+.jchev { font-weight: 800; font-size: 15px; flex: none; transition: transform 0.25s ease; }
+.jitem.open .jchev { transform: rotate(45deg); }
+.jteaser { margin: 8px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+.jquote { margin: 8px 0 0; font-style: italic; font-weight: 600; font-size: 12.5px; color: var(--navy); border-left: 3px solid var(--pink); padding: 2px 0 2px 10px; }
+.jitem.side-r .jquote { border-left: 3px solid var(--pink); border-right: 0; }
+.jitem.side-l .jquote { border-left: 0; border-right: 3px solid var(--pink); padding: 2px 10px 2px 0; }
+.jbody { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease; }
+.jitem.open .jbody { max-height: 240px; opacity: 1; margin-top: 8px; }
+.jbody p { margin: 0; font-size: 13px; line-height: 1.55; background: #fff; border: 2px solid var(--navy); padding: 10px 12px; }
 
 /* About · Toolkit */
 .tkit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 10px 0 4px; }
@@ -755,9 +773,14 @@ details.more > summary:hover { background: var(--butter); }
   .tiles, .cards4, .cards3, .tl3, .files, .files.three, .clinks, .badges { grid-template-columns: 1fr; }
   .files.three .file { grid-template-columns: 46px 1fr; grid-template-areas: 'i t' 'i e' 'i s'; }
   .about-photo img { width: 170px; }
-  .about-photos img { width: 70px; }
+  .cmp-frame { width: 190px; }
   .tkit { grid-template-columns: 1fr; }
-  .jhead { grid-template-columns: 52px 1fr 16px; gap: 8px; }
+  .jline-track, .jline-fill { left: 20px; }
+  .jitem, .jitem.side-l, .jitem.side-r { grid-template-columns: 40px 1fr; }
+  .jitem.side-l .jnode, .jitem.side-r .jnode { grid-column: 1; }
+  .jitem.side-l .jcard, .jitem.side-r .jcard { grid-column: 2; text-align: left; }
+  .jitem.side-l .jcard-h, .jitem.side-r .jcard-h { flex-direction: row; }
+  .jitem.side-l .jquote { border-left: 3px solid var(--pink); border-right: 0; padding: 2px 0 2px 10px; }
   .m-card-b .expdetail { padding: 6px 8px 12px; }
   .m-card-b .doc { padding: 14px 10px 18px; }
   /* photo album: a single column on small screens, captions always visible (no hover on touch) */

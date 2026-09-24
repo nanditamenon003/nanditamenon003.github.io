@@ -358,7 +358,7 @@
     renderRight();
     renderDock();
     paintXP();
-    NM.progressUI.mount($('#quest'), { pips: '#quest-pips', lock: '#quest-lock', count: '#quest-n', place: 'up', unlockedTip: 'Unlocked — Glitch is at the end of the dock' });
+    NM.progressUI.mount($('#quest'), { pips: '#quest-pips', lock: '#quest-lock', count: '#quest-n', place: 'down', unlockedTip: 'Unlocked — Glitch is at the end of the dock' });
     paintProgress();
     paintSound(NM.sfx.enabled);
     tickClock();

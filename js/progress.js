@@ -80,7 +80,7 @@
     const pop = h('<div class="qpop ' + o.place + '" role="dialog" aria-label="What is left to explore"></div>');
     host.appendChild(pop);
     const canHover = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
-    let open = false, pinned = false, tipTimer = 0;
+    let open = false, pinned = false, tipTimer = 0, lastDone = NM.game.progress().done;
 
     function renderList() {
       const p = NM.game.progress();
@@ -101,9 +101,12 @@
 
     function paint() {
       const p = NM.game.progress();
+      const gained = p.done > lastDone;
+      lastDone = p.done;
       pips.innerHTML = '';
-      for (let i = 0; i < p.total; i++) pips.appendChild(h('<i class="' + (i < p.done ? 'f' : '') + '"></i>'));
-      count.textContent = p.done + ' / ' + p.total + ' explored';
+      for (let i = 0; i < p.total; i++) pips.appendChild(h('<i class="' + (i < p.done ? 'f' : '') + (gained && i === p.done - 1 ? ' new' : '') + '"></i>'));
+      if (gained) { host.classList.remove('gain'); void host.offsetWidth; host.classList.add('gain'); setTimeout(() => host.classList.remove('gain'), 1200); }
+      count.textContent = 'PORTFOLIO EXPLORED — ' + p.done + '/' + p.total;
       const unlocked = NM.game.glitch;
       lock.innerHTML = padlockSvg(unlocked) + '<span class="lock-tip" role="tooltip">' + esc(unlocked ? o.unlockedTip : 'Explore everything to unlock') + '</span>';
       lock.classList.toggle('unlocked', unlocked);

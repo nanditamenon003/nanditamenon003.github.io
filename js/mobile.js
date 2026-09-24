@@ -57,7 +57,7 @@
       '<header class="m-head"><img class="px" src="assets/nandita_pixel_avatar.png" alt="">' +
         '<div class="m-id"><b>Nandita Menon</b><span>' + esc(P.tagline) + '</span></div>' +
         '<button type="button" class="m-snd" id="m-snd" aria-pressed="false" aria-label="Turn on 8-bit sound">♪</button>' +
-        '<span class="m-stats"><span class="m-xp" id="m-xp">LV1 · 0%</span><span class="m-prog" id="m-prog" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-label="Exploration progress — show what is left"><span class="quest-pips" id="m-pips"></span><span class="quest-lock" id="m-lock"></span><span class="quest-n" id="m-prog-n" aria-live="polite"></span></span></span></header>' +
+        '<span class="m-stats"><span class="m-xp" id="m-xp">LV1 · 0%</span></span><span class="quest m-prog" id="m-prog" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-label="Portfolio explored — show what is left"><span class="quest-top"><span class="quest-n" id="m-prog-n" aria-live="polite"></span></span><span class="quest-bar"><span class="quest-pips" id="m-pips"></span><span class="quest-lock" id="m-lock"></span></span></span></header>' +
       '<section class="m-sec m-hero">' +
         '<div class="plabel">PORTFOLIO.EXE</div>' +
         '<p>Computer-science engineer turned media &amp; brand strategist. PGDM Media &amp; Entertainment \'27, WeSchool Mumbai.</p>' +

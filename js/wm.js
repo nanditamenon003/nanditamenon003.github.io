@@ -3,7 +3,7 @@
   'use strict';
   const NM = window.NM;
 
-  const MENU_H = 34;
+  const MENU_H = 56;
   const DOCK_H = 96;
   const registry = {};
   const open = {}; // id -> { el, minimized, prev }

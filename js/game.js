@@ -23,6 +23,10 @@
     { id: 'levelcomplete', name: 'Level Complete', desc: 'Explored every piece of work — 8 of 8.', hint: 'Open both projects and every card in the folders.', sprite: 'podium' },
     { id: 'glitchfound', name: 'Found the Glitch', desc: 'Opened the hidden Glitch folder.', hint: 'Finish exploring the work, then look at the end of the dock.', sprite: 'glitch' },
     { id: 'playerone', name: 'Player One', desc: 'Opened all three cards inside Glitch.', hint: 'Open every card in the Glitch folder.', sprite: 'gamepad' },
+    { id: 'matchrookie', name: 'Rookie Matcher', desc: 'Finished Career Match on Easy.', hint: 'Win all three levels of Career Match on Easy.', sprite: 'arcade' },
+    { id: 'matchhard', name: 'Hard Hire', desc: 'Finished Career Match on Hard.', hint: 'Win all three levels of Career Match on Hard.', sprite: 'trophy' },
+    { id: 'combo5', name: 'Combo Breaker', desc: 'Hit a 5-match combo in Career Match.', hint: 'Chain five correct matches without a miss.', sprite: 'star' },
+    { id: 'flawless', name: 'Flawless', desc: 'Cleared Career Match without losing a life.', hint: 'Win Career Match with all three hearts left.', sprite: 'heart' },
     { id: 'completionist', name: 'Completionist', desc: 'Filled the System Usage meter to 100%.', hint: 'Keep exploring until the bar is full.', sprite: 'trophy' },
   ];
 
@@ -54,6 +58,10 @@
     if (S.glitch) unlockBadge('levelcomplete');
     if (S.done['open:glitch']) unlockBadge('glitchfound');
     if (n('glitchcard:') >= 3) unlockBadge('playerone');
+    if (S.done['match:easy']) unlockBadge('matchrookie');
+    if (S.done['match:hard']) unlockBadge('matchhard');
+    if (S.done['match:combo5']) unlockBadge('combo5');
+    if (S.done['match:flawless']) unlockBadge('flawless');
     if (S.xp >= MAX_XP) unlockBadge('completionist');
   }
 

@@ -13,14 +13,15 @@
     ['experience', 'Internship, research & client work'],
     ['about', 'The short story'],
     ['activity', 'Live analytics & insights'],
+    ['match', 'Career Match · a Solitaire-style memory game'],
   ];
   // the hidden Glitch folder is added once all 8 pieces of work have been explored (same rule as the desktop)
   const GLITCH_CARD = ['glitch', 'You explored everything. This is the last level.'];
   const LABELS = {
     blackfungus: 'Black Fungus Detection', instructor: 'Instructor Aid System', casecomps: 'Case Comps',
-    experience: 'Experience & Research', about: 'About Nandita', activity: 'Activity Monitor', glitch: 'Glitch',
+    experience: 'Experience & Research', about: 'About Nandita', activity: 'Activity Monitor', match: 'Career Match', glitch: 'Glitch',
   };
-  const SPRITES = { blackfungus: 'microscope', instructor: 'gradebook', casecomps: 'podium', experience: 'cabinet', about: 'about', activity: 'monitor', glitch: 'glitch' };
+  const SPRITES = { blackfungus: 'microscope', instructor: 'gradebook', casecomps: 'podium', experience: 'cabinet', about: 'about', activity: 'monitor', match: 'arcade', glitch: 'glitch' };
 
   let root = null;
   const opened = {};

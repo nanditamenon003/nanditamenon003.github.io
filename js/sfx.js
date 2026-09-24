@@ -78,13 +78,24 @@
     reset() { tone(300, 0.09, { type: 'sawtooth', vol: 0.05, slideTo: 90 }); noise(0.12, { freq: 900, vol: 0.1, when: 0.05 }); },
     unlock() { seq([392, 523, 659, 784, 988, 1175, 1568], 0.08, { type: 'triangle', vol: 0.08, len: 0.2 }); },
     tick() { tone(1400, 0.025, { vol: 0.025 }); },
+    // Career Match — deliberately quiet
+    mflip() { noise(0.05, { freq: 2600, vol: 0.06 }); tone(700, 0.03, { vol: 0.025 }); },
+    mmatch() { seq([784, 1047], 0.07, { type: 'triangle', vol: 0.06, len: 0.16 }); },
+    mmiss() { tone(150, 0.16, { type: 'sawtooth', vol: 0.04, slideTo: 105 }); },
+    mcombo(n) { const b = 440 * Math.pow(1.122, Math.min(n || 2, 8) - 2); seq([b, b * 1.26, b * 1.5, b * 2], 0.055, { type: 'triangle', vol: 0.055, len: 0.13 }); },
+    mlife() { seq([440, 349, 262, 196], 0.09, { type: 'sawtooth', vol: 0.04, len: 0.14 }); },
+    mwin() { seq([523, 659, 784, 1047, 784, 1047, 1319], 0.1, { type: 'triangle', vol: 0.06, len: 0.18 }); },
   };
+  // minimum gap (ms) between repeats of the same sound, so rapid clicking never turns into noise
+  const GAP = { mflip: 70, mmatch: 150, mmiss: 200, mcombo: 250, mlife: 400, mwin: 1500, tick: 300 };
+  const last = {};
 
   NM.sfx = {
     get enabled() { return enabled; },
-    play(name) {
+    play(name, arg) {
       if (!enabled || !SOUNDS[name]) return;
-      try { if (ctx && ctx.state === 'suspended') ctx.resume(); SOUNDS[name](); } catch (e) { /* audio is optional */ }
+      if (GAP[name]) { const now = performance.now(); if (now - (last[name] || 0) < GAP[name]) return; last[name] = now; }
+      try { if (ctx && ctx.state === 'suspended') ctx.resume(); SOUNDS[name](arg); } catch (e) { /* audio is optional */ }
     },
     set(on) {
       enabled = !!on;

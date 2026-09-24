@@ -15,6 +15,7 @@
     totalSeconds: 0,
     demo: false,
     contact: {},
+    game: { plays: 0, wins: 0, best: {}, combo5: 0 }, // Career Match
   });
 
   let S = Object.assign(blank(), NM.store.get(KEY, {}));
@@ -23,6 +24,7 @@
   S.recruiter = S.recruiter || {};
   S.questions = S.questions || [];
   S.contact = S.contact || {};
+  S.game = Object.assign({ plays: 0, wins: 0, best: {}, combo5: 0 }, S.game || {});
 
   // ---- simulated audience for the class demo (clearly labelled in the UI) ----
   const DEMO = {
@@ -93,6 +95,17 @@
       changed();
     },
     contact(kind) { S.contact[kind] = (S.contact[kind] || 0) + 1; changed(); },
+    // Career Match: plays, wins, best score per difficulty, 5-combos
+    game(kind, d) {
+      const g = S.game; d = d || {};
+      if (kind === 'play') g.plays += 1;
+      else if (kind === 'combo5') g.combo5 += 1;
+      else if (kind === 'end') {
+        if (d.win) g.wins += 1;
+        if (d.score > (g.best[d.diff] || 0)) g.best[d.diff] = d.score;
+      }
+      changed();
+    },
   };
 
   const sum = (o) => Object.keys(o).reduce((a, k) => a + o[k], 0);
@@ -126,6 +139,7 @@
       recruiterTotal: sum(recruiter),
       questions,
       questionTotal: questions.length,
+      game: S.game,
     };
   }
 

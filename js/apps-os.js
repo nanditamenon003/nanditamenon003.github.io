@@ -348,6 +348,7 @@
             '<div class="kpi"><em>6 · Recruiter interactions</em><b>' + v.recruiterTotal + '</b><span>mode selections</span></div>' +
             '<div class="kpi"><em>7 · Assistant questions</em><b>' + v.questionTotal + '</b><span>logged verbatim</span></div>' +
             '<div class="kpi"><em>8 · Most-viewed work</em><b class="sm">' + esc(best) + '</b><span>ranked below</span></div>' +
+            '<div class="kpi wide"><em>9 · Career Match (mini-game)</em><b class="sm">' + v.game.plays + ' plays · ' + v.game.wins + ' wins · best ' + Math.max(0, Math.max.apply(null, Object.keys(v.game.best).map((k) => v.game.best[k]).concat([0]))) + '</b><span>' + v.game.combo5 + ' five-combo' + (v.game.combo5 === 1 ? '' : 's') + ' · best by level: ' + (Object.keys(v.game.best).length ? Object.keys(v.game.best).map((k) => k + ' ' + v.game.best[k]).join(', ') : 'none yet') + '</span></div>' +
           '</div>' +
           '<div class="am-cols">' +
             '<section><h3>Most-viewed work · ranked</h3><div class="bars rank">' +

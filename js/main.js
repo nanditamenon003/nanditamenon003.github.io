@@ -8,7 +8,7 @@
   // Desktop: two projects + two folders on the left; Resume and About on the right.
   const LEFT_DEFAULT = ['blackfungus', 'instructor', 'casecomps', 'experience'];
   const RIGHT = ['resume', 'about'];
-  const DOCK = ['ama', 'recruiter', 'activity', 'achievements', 'contact']; // the hidden Glitch folder joins the end of the dock once unlocked
+  const DOCK = ['ama', 'recruiter', 'activity', 'achievements', 'match', 'contact']; // the hidden Glitch folder joins the end of the dock once unlocked
 
   const META = {
     blackfungus: { label: 'Black Fungus Detection', sprite: 'microscope', tip: 'Deep learning · Inception V3: 98.87% train / 98.25% test' },
@@ -22,12 +22,13 @@
     recruiter: { label: 'Recruiter Mode', sprite: 'gear', tip: 'What are you hiring for?' },
     activity: { label: 'Activity Monitor', sprite: 'monitor', tip: 'Live analytics' },
     achievements: { label: 'Achievements', sprite: 'trophy', tip: 'Badges & progress' },
+    match: { label: 'Career Match', sprite: 'arcade', tip: 'A Solitaire-style memory game' },
     contact: { label: 'Contact', sprite: 'mail', tip: 'Email · LinkedIn · GitHub' },
   };
   NM.meta = META;
 
   // XP for opening a window that is NOT a piece of work (folders earn a token amount; their cards earn the real XP)
-  const XP_ON_OPEN = { casecomps: 2, experience: 2, about: 3, contact: 3, activity: 5, achievements: 2, glitch: 10, ama: 2, recruiter: 2 };
+  const XP_ON_OPEN = { casecomps: 2, experience: 2, about: 3, contact: 3, activity: 5, achievements: 2, match: 2, glitch: 10, ama: 2, recruiter: 2 };
   // XP for each piece of work, once
   const WORK_XP = { blackfungus: 8, instructor: 8, brand: 8, bowl: 8, prodyssey: 8, sip: 6, sirp: 6, gcl: 6 };
 

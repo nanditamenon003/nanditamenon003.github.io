@@ -986,10 +986,11 @@ details.more > summary:hover { background: var(--butter); }
 @keyframes gx-jit { 0% { transform: translate(0, 0); } 50% { transform: translate(-4px, 1px); clip-path: inset(0 0 12% 0); } 100% { transform: translate(3px, -1px); } }
 .desktop.quake { animation: gx-quake 0.7s steps(1); }
 @keyframes gx-quake { 0% { transform: translate(0, 0); } 12% { transform: translate(-9px, 4px); } 24% { transform: translate(8px, -5px); } 36% { transform: translate(-7px, -3px); } 48% { transform: translate(6px, 4px); } 62% { transform: translate(-4px, 2px); } 80% { transform: translate(3px, -2px); } 100% { transform: none; } }
-.dicon.secret .dicon-img img { animation: glitchfx 3.6s steps(1) infinite; }
-.dicon.secret { background: rgba(26, 8, 48, 0.55); border-color: #7A3B5C; box-shadow: 3px 0 0 #FF2BD6, -3px 0 0 #00E5FF; }
-.dicon.secret .dicon-label { background: #1A0830; color: #fff; }
+.dicon.secret .dicon-img { position: relative; }
+.dicon.secret .dicon-img img { animation: glitchfx 3.6s steps(1) infinite, gx-neon 1.6s ease-in-out infinite; }
+.dicon.secret:hover { background: transparent; border-color: transparent; }
 .dicon.secret.arrive { animation: gx-arrive 1.3s steps(1) 1; }
 @keyframes gx-arrive { 0% { opacity: 0; transform: scale(0.2); } 10% { opacity: 1; transform: scale(1.4) skewX(12deg); } 20% { opacity: 0; } 30% { opacity: 1; transform: scale(0.9) skewX(-8deg); } 45% { opacity: 0.3; } 60% { opacity: 1; transform: scale(1.12); } 100% { opacity: 1; transform: none; } }
-.dicon.secret.fresh::before { content: ''; position: absolute; inset: -6px; border: 3px solid #FF2BD6; pointer-events: none; animation: gx-ring 1.4s ease-out infinite; }
-@keyframes gx-ring { 0% { transform: scale(0.85); opacity: 0.95; } 100% { transform: scale(1.28); opacity: 0; } }
+.dicon.secret.fresh .dicon-img::before { content: ''; position: absolute; left: 50%; top: 50%; width: 92px; height: 92px; margin: -46px 0 0 -46px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 43, 214, 0.55) 0%, rgba(0, 229, 255, 0.28) 45%, transparent 70%); pointer-events: none; animation: gx-halo 1.5s ease-out infinite; }
+@keyframes gx-halo { 0% { transform: scale(0.6); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+@keyframes gx-neon { 0%, 100% { filter: drop-shadow(3px 0 0 #FF2BD6) drop-shadow(-3px 0 0 #00E5FF) drop-shadow(0 0 6px rgba(255, 43, 214, 0.6)); } 50% { filter: drop-shadow(-3px 0 0 #FF2BD6) drop-shadow(3px 0 0 #00E5FF) drop-shadow(0 0 12px rgba(0, 229, 255, 0.8)); } }

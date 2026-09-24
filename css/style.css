@@ -181,7 +181,7 @@ img.px, .px { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* progress bar — lives in the menu bar and takes visual priority over the clock / sound / XP */
 .quest { position: relative; z-index: 3; width: 320px; display: flex; flex-direction: column; gap: 5px; padding: 6px 12px 7px; background: rgba(159, 240, 203, 0.08); border: 2px solid #9FF0CB; box-shadow: 0 0 0 2px #0E1530, 0 0 12px rgba(159, 240, 203, 0.3); color: #fff; font-family: var(--px); cursor: pointer; }
-.quest-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.quest-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; min-width: 0; overflow: hidden; }
 .quest-n { font-family: var(--px); font-size: 8px; line-height: 1.3; letter-spacing: 0.4px; color: #9FF0CB; white-space: nowrap; }
 .quest-hint { font-family: var(--px); font-size: 7px; font-style: normal; font-weight: 400; color: #FFD86B; white-space: nowrap; }
 .quest-bar { display: flex; align-items: center; gap: 8px; }
@@ -808,7 +808,7 @@ details.more > summary:hover { background: var(--butter); }
 @media (max-width: 1100px) {
   .sticky { display: none; }
   .mb-name { display: none; }
-  .quest { width: 280px; }
+  .quest { width: 304px; }
 }
 @media (max-width: 900px) {
   .mb-clock { display: none; }

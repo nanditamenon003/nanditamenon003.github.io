@@ -230,7 +230,7 @@
     // pips, count, padlock and the checklist popover are painted by progress.js
     const pr = NM.game.progress();
     let hint = '';
-    if (NM.game.glitch) hint = '★ Glitch unlocked';
+    if (NM.game.glitch) hint = '★ UNLOCKED';
     else if (pr.done === pr.total - 1) hint = 'one more…';
     $('#quest-hint').textContent = hint;
     refreshExploredTicks();

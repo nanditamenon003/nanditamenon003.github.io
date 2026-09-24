@@ -78,6 +78,14 @@
     reset() { tone(300, 0.09, { type: 'sawtooth', vol: 0.05, slideTo: 90 }); noise(0.12, { freq: 900, vol: 0.1, when: 0.05 }); },
     unlock() { seq([392, 523, 659, 784, 988, 1175, 1568], 0.08, { type: 'triangle', vol: 0.08, len: 0.2 }); },
     tick() { tone(1400, 0.025, { vol: 0.025 }); },
+    // the hidden Glitch file being revealed: rumble, stuttering static, rising glitch run, stinger chord
+    reveal() {
+      tone(70, 1.0, { type: 'sawtooth', vol: 0.07, slideTo: 160 });
+      noise(0.12, { freq: 900, vol: 0.14 }); noise(0.1, { freq: 3200, vol: 0.12, when: 0.22 }); noise(0.14, { freq: 1500, vol: 0.13, when: 0.5 });
+      [262, 330, 392, 523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, 0.1, { type: 'square', vol: 0.05, when: 0.55 + i * 0.075 }));
+      [523, 659, 784, 1047].forEach((f) => tone(f, 0.7, { type: 'triangle', vol: 0.06, when: 1.2 }));
+      noise(0.2, { freq: 5000, vol: 0.1, when: 1.2 });
+    },
     // Career Match — deliberately quiet
     mflip() { noise(0.05, { freq: 2600, vol: 0.06 }); tone(700, 0.03, { vol: 0.025 }); },
     mmatch() { seq([784, 1047], 0.07, { type: 'triangle', vol: 0.06, len: 0.16 }); },
@@ -87,7 +95,7 @@
     mwin() { seq([523, 659, 784, 1047, 784, 1047, 1319], 0.1, { type: 'triangle', vol: 0.06, len: 0.18 }); },
   };
   // minimum gap (ms) between repeats of the same sound, so rapid clicking never turns into noise
-  const GAP = { mflip: 70, mmatch: 150, mmiss: 200, mcombo: 250, mlife: 400, mwin: 1500, tick: 300 };
+  const GAP = { mflip: 70, mmatch: 150, mmiss: 200, mcombo: 250, mlife: 400, mwin: 1500, reveal: 3000, tick: 300 };
   const last = {};
 
   NM.sfx = {

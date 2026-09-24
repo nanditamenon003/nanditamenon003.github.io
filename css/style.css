@@ -973,3 +973,23 @@ details.more > summary:hover { background: var(--butter); }
 @media (prefers-reduced-motion: reduce) {
   .gc-in, .gc-lift { transition-duration: 0.001ms !important; }
 }
+/* hidden Glitch file on the desktop: dramatic reveal + a persistent neon highlight */
+.gx { position: fixed; inset: 0; z-index: 7500; display: grid; place-items: center; pointer-events: none; transition: opacity 0.6s; }
+.gx.out { opacity: 0; }
+.gx-dim { position: absolute; inset: 0; background: radial-gradient(circle at 50% 45%, rgba(20, 0, 40, 0.25), rgba(10, 0, 26, 0.9)); animation: gx-in 0.5s steps(5) both; }
+.gx-dim::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.38) 0 2px, transparent 2px 4px); }
+.gx-flash { position: absolute; inset: 0; background: #fff; animation: gx-white 0.6s ease-out forwards; }
+.gx-txt { position: relative; text-align: center; font-family: var(--px); font-size: clamp(14px, 3.4vw, 26px); line-height: 1.7; color: #fff; text-shadow: 3px 0 #FF2BD6, -3px 0 #00E5FF; animation: gx-jit 0.14s steps(2) infinite; }
+.gx-txt small { display: block; margin-top: 14px; font-size: clamp(8px, 1.6vw, 11px); color: #9FF0CB; text-shadow: none; }
+@keyframes gx-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes gx-white { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes gx-jit { 0% { transform: translate(0, 0); } 50% { transform: translate(-4px, 1px); clip-path: inset(0 0 12% 0); } 100% { transform: translate(3px, -1px); } }
+.desktop.quake { animation: gx-quake 0.7s steps(1); }
+@keyframes gx-quake { 0% { transform: translate(0, 0); } 12% { transform: translate(-9px, 4px); } 24% { transform: translate(8px, -5px); } 36% { transform: translate(-7px, -3px); } 48% { transform: translate(6px, 4px); } 62% { transform: translate(-4px, 2px); } 80% { transform: translate(3px, -2px); } 100% { transform: none; } }
+.dicon.secret .dicon-img img { animation: glitchfx 3.6s steps(1) infinite; }
+.dicon.secret { background: rgba(26, 8, 48, 0.55); border-color: #7A3B5C; box-shadow: 3px 0 0 #FF2BD6, -3px 0 0 #00E5FF; }
+.dicon.secret .dicon-label { background: #1A0830; color: #fff; }
+.dicon.secret.arrive { animation: gx-arrive 1.3s steps(1) 1; }
+@keyframes gx-arrive { 0% { opacity: 0; transform: scale(0.2); } 10% { opacity: 1; transform: scale(1.4) skewX(12deg); } 20% { opacity: 0; } 30% { opacity: 1; transform: scale(0.9) skewX(-8deg); } 45% { opacity: 0.3; } 60% { opacity: 1; transform: scale(1.12); } 100% { opacity: 1; transform: none; } }
+.dicon.secret.fresh::before { content: ''; position: absolute; inset: -6px; border: 3px solid #FF2BD6; pointer-events: none; animation: gx-ring 1.4s ease-out infinite; }
+@keyframes gx-ring { 0% { transform: scale(0.85); opacity: 0.95; } 100% { transform: scale(1.28); opacity: 0; } }

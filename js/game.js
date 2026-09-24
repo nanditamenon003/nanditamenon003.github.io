@@ -21,7 +21,7 @@
     { id: 'papertrail', name: 'Paper Trail', desc: 'Downloaded the resume.', hint: 'Grab the CV.', sprite: 'pdf' },
     { id: 'datanerd', name: 'Data Nerd', desc: 'Opened the Activity Monitor.', hint: 'Look at how the site tracks itself.', sprite: 'monitor' },
     { id: 'levelcomplete', name: 'Level Complete', desc: 'Explored every piece of work — 8 of 8.', hint: 'Open both projects and every card in the folders.', sprite: 'podium' },
-    { id: 'glitchfound', name: 'Found the Glitch', desc: 'Opened the hidden Glitch folder.', hint: 'Finish exploring the work, then look at the end of the dock.', sprite: 'glitch' },
+    { id: 'glitchfound', name: 'Found the Glitch', desc: 'Opened the hidden Glitch folder.', hint: 'Finish exploring the work, then look under Career Match on the desktop.', sprite: 'glitch' },
     { id: 'playerone', name: 'Player One', desc: 'Opened all three cards inside Glitch.', hint: 'Open every card in the Glitch folder.', sprite: 'gamepad' },
     { id: 'matchrookie', name: 'Rookie Matcher', desc: 'Finished Career Match on Easy.', hint: 'Win all three levels of Career Match on Easy.', sprite: 'arcade' },
     { id: 'matchhard', name: 'Hard Hire', desc: 'Finished Career Match on Hard.', hint: 'Win all three levels of Career Match on Hard.', sprite: 'trophy' },

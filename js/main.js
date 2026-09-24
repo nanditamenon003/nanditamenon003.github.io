@@ -7,8 +7,8 @@
 
   // Desktop: two projects + two folders on the left; Resume and About on the right.
   const LEFT_DEFAULT = ['blackfungus', 'instructor', 'casecomps', 'experience'];
-  const RIGHT = ['resume', 'about'];
-  const DOCK = ['ama', 'recruiter', 'activity', 'achievements', 'match', 'contact']; // the hidden Glitch folder joins the end of the dock once unlocked
+  const RIGHT = ['resume', 'about', 'match']; // Career Match sits under About; the hidden Glitch file lands right after it once unlocked
+  const DOCK = ['ama', 'recruiter', 'activity', 'achievements', 'contact'];
 
   const META = {
     blackfungus: { label: 'Black Fungus Detection', sprite: 'microscope', tip: 'Deep learning · Inception V3: 98.87% train / 98.25% test' },
@@ -139,13 +139,13 @@
     const col = $('#icons-right');
     col.innerHTML = '';
     RIGHT.forEach((id) => col.appendChild(makeIcon(id)));
+    if (NM.game.glitch) addGlitchIcon(false);
   }
 
   function renderDock() {
     const dock = $('#dock');
     dock.innerHTML = '';
     DOCK.forEach((id) => dock.appendChild(makeDockItem(id)));
-    if (NM.game.glitch) addGlitchDock(false);
   }
 
   function makeDockItem(id) {
@@ -161,20 +161,31 @@
     return b;
   }
 
-  // The hidden Glitch folder: appears at the end of the dock (after a divider) once all 8 works are explored
-  function addGlitchDock(fanfare) {
-    const dock = $('#dock');
-    if (!dock || $('[data-app="glitch"]', dock)) return;
-    dock.appendChild(h('<i class="dock-sep glitch-sep" aria-hidden="true"></i>'));
-    const b = makeDockItem('glitch');
-    b.classList.add('glitchy');
-    if (fanfare || !NM.game.hasBadge('glitchfound')) b.classList.add('fresh'); // pulses until first opened
-    dock.appendChild(b);
-    refreshRunning();
+  // The hidden Glitch file: lands on the desktop right after Career Match once all 8 works are explored.
+  // With fanfare it gets a full-screen reveal (flash, shake, scanlines, glitch title) before the icon materialises.
+  function addGlitchIcon(fanfare) {
+    const col = $('#icons-right');
+    if (!col || $('[data-app="glitch"]', col)) return;
+    const b = makeIcon('glitch');
+    b.classList.add('secret');
+    if (fanfare || !NM.game.hasBadge('glitchfound')) b.classList.add('fresh'); // rings pulse until it is first opened
+    if (!fanfare) { col.appendChild(b); refreshRunning(); return; }
+    const fx = h('<div class="gx" aria-hidden="true"><i class="gx-dim"></i><i class="gx-flash"></i><div class="gx-txt">HIDDEN FILE DETECTED<small>something just landed on your desktop…</small></div></div>');
+    document.body.appendChild(fx);
+    const desk = $('#desktop');
+    desk.classList.add('quake');
+    setTimeout(() => desk.classList.remove('quake'), 700);
+    setTimeout(() => { fx.classList.add('out'); }, 1900);
+    setTimeout(() => fx.remove(), 2500);
+    setTimeout(() => {
+      b.classList.add('arrive');
+      col.appendChild(b);
+      refreshRunning();
+    }, 1700);
   }
 
-  function removeGlitchDock() {
-    $$('#dock .glitch-sep, #dock [data-app="glitch"]').forEach((e) => e.remove());
+  function removeGlitchIcon() {
+    $$('#icons-right [data-app="glitch"], .gx').forEach((e) => e.remove());
   }
 
   function refreshRunning() {
@@ -239,12 +250,12 @@
   });
   NM.on('progress', paintProgress);
   NM.on('glitch', () => {
-    NM.sfx.play('unlock');
-    addGlitchDock(true);
+    NM.sfx.play('reveal');
+    addGlitchIcon(true);
     paintProgress(); // the 100% milestone toast (progress.js) announces the unlock
-    say('You explored everything. Something just appeared at the end of the dock…', 7500);
+    say('You explored everything. Something just appeared on your desktop, right under Career Match…', 7500);
   });
-  NM.on('gamereset', () => { removeGlitchDock(); if (NM.wm.isOpen('glitch')) NM.wm.close('glitch'); });
+  NM.on('gamereset', () => { removeGlitchIcon(); if (NM.wm.isOpen('glitch')) NM.wm.close('glitch'); });
 
   /* ---------- personalisation (Recruiter Mode) ---------- */
   function setSticky(text) {
@@ -333,7 +344,7 @@
     NM.analytics.track.windowOpen(id);
     if (XP_ON_OPEN[id]) NM.game.award('open:' + id, XP_ON_OPEN[id]);
     if (D.works[id]) NM.workOpened(id);     // a standalone project window (Black Fungus, Instructor Aid)
-    if (id === 'glitch') { const gi = $('.dock-item[data-app="glitch"]'); if (gi) gi.classList.remove('fresh'); }
+    if (id === 'glitch') { const gi = $('.dicon[data-app="glitch"]'); if (gi) gi.classList.remove('fresh'); }
     refreshRunning();
   });
   NM.on('wm:close', refreshRunning);
@@ -359,7 +370,7 @@
     renderRight();
     renderDock();
     paintXP();
-    NM.progressUI.mount($('#quest'), { pips: '#quest-pips', lock: '#quest-lock', count: '#quest-n', place: 'down', unlockedTip: 'Unlocked — Glitch is at the end of the dock' });
+    NM.progressUI.mount($('#quest'), { pips: '#quest-pips', lock: '#quest-lock', count: '#quest-n', place: 'down', unlockedTip: 'Unlocked — the Glitch file is on your desktop, under Career Match' });
     paintProgress();
     paintSound(NM.sfx.enabled);
     tickClock();
